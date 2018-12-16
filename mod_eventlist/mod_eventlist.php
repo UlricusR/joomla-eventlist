@@ -13,6 +13,10 @@ defined('_JEXEC') or die;
 // Include the eventlist functions only once
 JLoader::register('ModEventlistHelper', __DIR__ . '/helper.php');
 
+// Get mod_eventlist parameters
+$module = JModuleHelper::getModule('mod_eventlist');
+$params = new JRegistry($module->params);
+
 $eventList = modEventListHelper::getList($params);
 //print_r($eventList);
 	

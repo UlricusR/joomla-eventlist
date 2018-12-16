@@ -44,7 +44,8 @@ if(array_filter($eventList)) {
 				echo " Uhr";
 				if($event['comment']) {echo " (".$event['comment'].")";}
 				echo ": ";
-				echo "<a href=".$event['url'].">".$event['title']."</a>";
+				if ($event['url']) echo "<a href=".$event['url'].">".$event['title']."</a>";
+				else echo $event['title'];
 				echo "</li>";
 			}
 			echo "</ul>";

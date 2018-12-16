@@ -96,14 +96,20 @@ class ModEventListHelper
 				$authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
 				$model->setState('filter.access', $access);
 				
-				// Retrieve Content
-				$items = $model->getItems();
+				// Retrieve published content
+				$publishedItems = $model->getItems();
+				
+				// Get non-published items if requested
+				if ($params['showdespitenotpublished']) {
+					$model->setState('filter.published', 0);
+					$publishedItems = array_merge($publishedItems, $model->getItems());
+				}
 				
 				$dayEvents = array_fill(0, count($articleIds), null);
-				if(array_filter($items)) {
+				if(array_filter($publishedItems)) {
 			
 					// Build return array for the day
-				    foreach ($items as $item)
+				    foreach ($publishedItems as $item)
 				    {
 				       // Get startingtime
 						$query = $db->getQuery(true)
@@ -143,7 +149,10 @@ class ModEventListHelper
 			          $eventData['startingtime'] = $startingtime;
 			          if($endtime) {$eventData['endtime'] = $endtime;} else {$eventData['endtime'] = null;}
 			          if($comment) {$eventData['comment'] = $comment;} else {$eventData['comment'] = null;}
-			          $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
+			          
+						// Include URL only for published articles			          
+			          if($item->state == 1) $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
+			          
 			          $eventData['title'] = $item->title;
 			          
 			          // Sort eventData into right position
