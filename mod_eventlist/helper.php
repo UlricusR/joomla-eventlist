@@ -28,12 +28,11 @@ class ModEventListHelper
 	 {
 	 	// Get the database object
 		$db = JFactory::getDbo();	 	
-		$prefix = $db->getPrefix();
 		
 		// Get the field_id for wochentag, startzeit, endzeit, kommentar
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('name', 'id')))
-			->from($db->quoteName($prefix . 'fields'))
+			->from($db->quoteName('#__fields'))
 			->where("`name` in ('wochentag', 'startzeit', 'endzeit', 'kommentar')");
 		$db->setQuery($query);
 		$fields = $db->loadAssocList();
@@ -58,14 +57,14 @@ class ModEventListHelper
 			// ORDER BY `value`
 			$subQuery = $db->getQuery(true)
 				->select('item_id')
-				->from($db->quoteName($prefix . 'fields_values'))
+				->from($db->quoteName('#__fields_values'))
 				->where(
 					$db->quoteName('field_id') . ' = ' . $db->quote($wochentag) . ' AND ' . 
 					$db->quoteName('value') . ' = ' . $db->quote($day)
 				);
 			$query = $db->getQuery(true)
 				->select($db->quoteName(array('item_id', 'value')))
-	          ->from($db->quoteName($prefix . 'fields_values'))
+	          ->from($db->quoteName('#__fields_values'))
 	          ->where(
 	          	$db->quoteName('field_id') . ' = ' . $db->quote($startzeit) . ' AND ' .
 	           	$db->quoteName('item_id') . ' IN (' . $subQuery . ')'
@@ -109,7 +108,7 @@ class ModEventListHelper
 				       // Get startingtime
 						$query = $db->getQuery(true)
 			            ->select($db->quoteName('value'))
-			            ->from($db->quoteName($prefix . 'fields_values'))
+			            ->from($db->quoteName('#__fields_values'))
 			            ->where(
 			            		$db->quoteName('field_id') . ' = ' . $db->quote($startzeit) . ' AND ' .
 			            		$db->quoteName('item_id') . ' = ' . $db->quote($item->id)
@@ -120,7 +119,7 @@ class ModEventListHelper
 						// Get endtime
 						$query = $db->getQuery(true)
 			            ->select($db->quoteName('value'))
-			            ->from($db->quoteName($prefix . 'fields_values'))
+			            ->from($db->quoteName('#__fields_values'))
 			            ->where(
 			            		$db->quoteName('field_id') . ' = ' . $db->quote($endzeit) . ' AND ' .
 			            		$db->quoteName('item_id') . ' = ' . $db->quote($item->id)
@@ -131,7 +130,7 @@ class ModEventListHelper
 			          // Get comment
 						$query = $db->getQuery(true)
 			            ->select($db->quoteName('value'))
-			            ->from($db->quoteName($prefix . 'fields_values'))
+			            ->from($db->quoteName('#__fields_values'))
 			            ->where(
 			            		$db->quoteName('field_id') . ' = ' . $db->quote($kommentar) . ' AND ' .
 			            		$db->quoteName('item_id') . ' = ' . $db->quote($item->id)
