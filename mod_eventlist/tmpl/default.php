@@ -7,33 +7,22 @@ use Joomla\Utilities\ArrayHelper;
 //print_r($eventList);
 
 if(array_filter($eventList)) {
+	
+	// Load language file, set default language to en-GB
+	$language =& JFactory::getLanguage();
+	$language->setDefault('en-GB');
+	$extension = 'mod_eventlist';
+	$base_dir = JPATH_SITE;
+	$language->load($extension, $base_dir, $language->getTag(), true);
+
+	// Define weekdays
+	$weekdays = explode(',', $language->_("MOD_EVENTLIST_WEEKDAYS"));
+	
 	// Iterate through days
 	foreach($eventList as $dayid => $day) {
 		if(!empty($day)) {
 			// Echo day
-			switch($dayid) {
-				case 1:
-					echo "<p><strong>Sonntag</strong></p>";
-					break;
-				case 2:
-					echo "<p><strong>Montag</strong></p>";
-					break;
-				case 3:
-					echo "<p><strong>Dienstag</strong></p>";
-					break;
-				case 4:
-					echo "<p><strong>Mittwoch</strong></p>";
-					break;
-				case 5:
-					echo "<p><strong>Donnerstag</strong></p>";
-					break;
-				case 6:
-					echo "<p><strong>Freitag</strong></p>";
-					break;
-				case 7:
-					echo "<p><strong>Samstag</strong></p>";
-					break;
-			}
+			echo '<p><strong>'.$weekdays[$dayid-1].'</strong></p>';
 			
 			// Echo events of the day
 			echo "<ul>";
