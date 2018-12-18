@@ -8,7 +8,7 @@
 	 <license>Code released under the [GNU GPL 3.0]
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
 	 </license>
-	 <version>1.0.0</version>
+	 <version>0.1.0</version>
 	 <updateservers>
 			<server type="extension" name="Event List" priority="1">https://rueth.info/eventlist_update.xml</server>
 	 </updateservers>
