@@ -29,22 +29,45 @@ class ModEventListHelper
 	 	// Get the database object
 		$db = JFactory::getDbo();	 	
 		
-		// Get the field_id for wochentag, startzeit, endzeit, kommentar
+		// Get all entries from #__content_eventlist that have data
 		$query = $db->getQuery(true)
-			->select($db->quoteName(array('name', 'id')))
-			->from($db->quoteName('#__fields'))
-			->where("`name` in ('wochentag', 'startzeit', 'endzeit', 'kommentar')");
+			->select($db->quoteName(array('article_id', 'data')))
+			->from($db->quoteName('#__content_eventlist'))
+			->where("`data` IS NOT NULL");
 		$db->setQuery($query);
-		$fields = $db->loadAssocList();
+		$articles = $db->loadAssocList();
 		
-		$wochentag = null;
-		$startzeit = null;
-		$endzeit = null;
-		$kommentar = null;
+		// Create an array with seven empty arrays, one for each day of the week TODO Configure startday
+		$days = array(array(), array(), array(), array(), array(), array(), array());
 		
-		foreach($fields as $field) {
-			${$field['name']} = $field['id'];
+		// Fill the days array with all relevant articles
+		foreach($articles as $article) {
+			$data = json_decode(json_decode($article['data'], $assoc = true), $assoc = true);
+			
+			// We need at least weekday and starttime for adding the article to the event list, so if there is none, we'll move on with the next article
+			if(!($data['eventlist_weekday'] && $data['eventlist_starttime'])) continue;
+			
+			// Create event info array
+			$eventInfo = array();
+			$eventInfo['article_id'] = $article['article_id'];
+			$eventInfo['starttime'] = $data['eventlist_starttime'];
+			if($data['eventlist_endtime']) $eventInfo['endtime'] = $data['eventlist_endtime'];
+			if($data['eventlist_comment']) $eventInfo['comment'] = $data['eventlist_comment'];
+			
+			// Add to the correct day
+			$days[(int)$data['eventlist_weekday'] - 1][] = $eventInfo;
 		}
+		print_r($days);
+		
+		// Sort by starttime
+		$sortedDays = array();
+		foreach($days as $day) {
+			$sortedDays[] = ArrayHelper::sortObjects($day, 'starttime');
+		}
+		print_r($sortedDays); return;
+		
+		// Get the article content and URL for every day
+		
 		
 		$eventList = array();
 		
