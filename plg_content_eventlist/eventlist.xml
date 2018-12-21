@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension version="3.9" type="plugin" group="content" method="upgrade">
-	<name>plg_content_eventlist</name>
+	<name>PLG_CONTENT_EVENTLIST</name>
 	<author>Ulrich Rueth</author>
-	<creationDate>December 2018</creationDate>
-	<copyright>Copyright (C) 2018 Ulrich Rueth</copyright>
-	<license>GNU General Public License version 3 or later</license>
 	<authorEmail>code@rueth.info</authorEmail>
 	<authorUrl>https://rueth.info</authorUrl>
+	<creationDate>December 2018</creationDate>
+	<copyright>Copyright (C) 2018 Ulrich Rueth</copyright>
+	<license>Code released under the [GNU GPL 3.0]
+		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
+	</license>
 	<version>0.1.0</version>
 	<description>PLG_CONTENT_EVENTLIST_DESC</description>
 	
 	<files>
 		<filename plugin="eventlist">eventlist.php</filename>
 		<folder>language</folder>
-		<!--<folder>sql</folder>
-		<folder>extras</folder>-->
+		<folder>sql</folder>
+		<folder>extras</folder>
 	</files>
-	<!--
+	
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
@@ -34,76 +36,4 @@
 			<schemapath type="mysql">sql/update</schemapath>
 		</schemas>
 	</update>
-	-->
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
-				<field
-					name="contactperson"
-					type="text"
-					label="PLG_CONTENT_EVENTLIST_PARAM_CONTACTPERSON"
-					description="PLG_CONTENT_EVENTLIST_PARAM_CONTACTPERSON_DESC"
-				/>
-				<field
-					name="email"
-					type="email"
-					label="JGLOBAL_EMAIL"
-					description="PLG_CONTENT_EVENTLIST_PARAM_EMAIL_DESC"
-					validate="email"
-				/>
-				<field
-					name="phone"
-					type="tel"
-					label="PLG_CONTENT_EVENTLIST_PARAM_PHONE"
-					description="PLG_CONTENT_EVENTLIST_PARAM_PHONE_DESC"
-					validate="tel"
-				/>
-				<field
-					name="audience"
-					type="text"
-					label="PLG_CONTENT_EVENTLIST_PARAM_AUDIENCE"
-					description="PLG_CONTENT_EVENTLIST_PARAM_AUDIENCE_DESC"
-				/>
-				<field
-					name="location"
-					type="text"
-					label="PLG_CONTENT_EVENTLIST_PARAM_LOCATION"
-					description="PLG_CONTENT_EVENTLIST_PARAM_LOCATION_DESC"
-				/>
-				<field
-					name="weekday"
-					type="list"
-					label="PLG_CONTENT_EVENTLIST_PARAM_WEEKDAY"
-					description="PLG_CONTENT_EVENTLIST_PARAM_WEEKDAY_DESC"
-				>
-					<option value=""></option>
-					<option value="1">PLG_CONTENT_EVENTLIST_VALUE_SUNDAY</option>
-					<option value="2">PLG_CONTENT_EVENTLIST_VALUE_MONDAY</option>
-					<option value="3">PLG_CONTENT_EVENTLIST_VALUE_TUESDAY</option>
-					<option value="4">PLG_CONTENT_EVENTLIST_VALUE_WEDNESDAY</option>
-					<option value="5">PLG_CONTENT_EVENTLIST_VALUE_THURSDAY</option>
-					<option value="6">PLG_CONTENT_EVENTLIST_VALUE_FRIDAY</option>
-					<option value="7">PLG_CONTENT_EVENTLIST_VALUE_SATURDAY</option>
-				</field>
-				<field
-					name="starttime"
-					type="text"
-					label="PLG_CONTENT_EVENTLIST_PARAM_STARTTIME"
-					description="PLG_CONTENT_EVENTLIST_PARAM_STARTTIME_DESC"
-				/>
-				<field
-					name="endtime"
-					type="text"
-					label="PLG_CONTENT_EVENTLIST_PARAM_ENDTIME"
-					description="PLG_CONTENT_EVENTLIST_PARAM_ENDTIME_DESC"
-				/>
-				<field
-					name="comment"
-					type="text"
-					label="PLG_CONTENT_EVENTLIST_PARAM_COMMENT"
-					description="PLG_CONTENT_EVENTLIST_PARAM_COMMENT_DESC"
-				/>
-			</fieldset>
-		</fields>
-	</config>
 </extension>

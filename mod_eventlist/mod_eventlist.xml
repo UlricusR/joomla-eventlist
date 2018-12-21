@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.8.0" client="site" method="upgrade">
-    <name>Event List</name>
-    <author>Ulrich Rueth</author>
-	 <authorEmail>code@rueth.info</authorEmail>
-	 <authorUrl>http://www.rueth.info</authorUrl>
-	 <copyright>Copyright 2018 Ulrich Rueth</copyright>
-	 <license>Code released under the [GNU GPL 3.0]
+   <name>Event List</name>
+   <author>Ulrich Rueth</author>
+	<authorEmail>code@rueth.info</authorEmail>
+	<authorUrl>https://rueth.info</authorUrl>
+	<creationDate>December 2018</creationDate>
+	<copyright>Copyright (C) 2018 Ulrich Rueth</copyright>
+	<license>Code released under the [GNU GPL 3.0]
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
-	 </license>
-	 <version>0.1.0</version>
-	 <updateservers>
-			<server type="extension" name="Event List" priority="1">https://rueth.info/eventlist_update.xml</server>
-	 </updateservers>
-    <description>MOD_EVENTLIST_DESC</description>
-    <files>
-        <filename>mod_eventlist.xml</filename>
-        <filename module="mod_eventlist">mod_eventlist.php</filename>
-        <filename>index.html</filename>
-        <filename>helper.php</filename>
-        <filename>tmpl/default.php</filename>
-        <filename>tmpl/index.html</filename>
-    </files>
-    <scriptfile>script.php</scriptfile>
-    <config>
-	    <fields name="params">
-	    	<fieldset name="basic">
+	</license>
+	<version>0.1.0</version>
+   <description>MOD_EVENTLIST_DESC</description>
+
+	<updateservers>
+		<server type="extension" name="Event List" priority="1">https://rueth.info/eventlist_update.xml</server>
+	</updateservers>
+
+   <files>
+       <filename>mod_eventlist.xml</filename>
+       <filename module="mod_eventlist">mod_eventlist.php</filename>
+       <filename>index.html</filename>
+       <filename>helper.php</filename>
+       <filename>tmpl/default.php</filename>
+       <filename>tmpl/index.html</filename>
+   </files>
+
+   <scriptfile>script.php</scriptfile>
+
+   <config>
+	   <fields name="params">
+	   		<fieldset name="basic">
 				<field
 					name="showdespitenotpublished"
 					type="radio"
-	    			required="true"
+	   				required="true"
 					label="MOD_EVENTLIST_FIELD_SHOWDESPITENOTPUBLISHED"
 					default="0"
 					description="MOD_EVENTLIST_FIELD_SHOWDESPITENOTPUBLISHED_DESC">
@@ -38,6 +43,7 @@
 			</fieldset>
 		</fields>
 	</config>
+
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.mod_eventlist.ini</language>
 		<!--<language tag="en-GB">en-GB/en-GB.mod_eventlist.sys.ini</language>-->
