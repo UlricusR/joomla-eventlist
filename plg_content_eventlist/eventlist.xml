@@ -9,7 +9,7 @@
 	<license>Code released under the [GNU GPL 3.0]
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
 	</license>
-	<version>0.1.0</version>
+	<version>1.0.0</version>
 	<description>PLG_CONTENT_EVENTLIST_DESC</description>
 	
 	<files>
