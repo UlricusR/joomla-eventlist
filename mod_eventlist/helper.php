@@ -9,9 +9,6 @@
  
 defined('_JEXEC') or die;
 
-use Joomla\Utilities\ArrayHelper;
-//JLoader::register('FieldsHelper', JPATH_ADMINISTRATOR . '/components/com_fields/helpers/fields.php');
-
 class ModEventListHelper
 {
 	/**
@@ -42,13 +39,14 @@ class ModEventListHelper
 		$articles = $db->loadAssocList();
 		
 		// Create an array with seven empty arrays, one for each day of the week TODO Configure startday
-		$days = array(array(), array(), array(), array(), array(), array(), array());
+		$days = array_fill(0, 7, array());
 		
 		// Fill the days array with all relevant articles
 		foreach($articles as $article) {
 			$data = json_decode(json_decode($article['data'], $assoc = true), $assoc = true);
 			
-			// We need at least weekday and starttime for adding the article to the event list, so if there is none, we'll move on with the next article
+			// We need at least weekday and starttime for adding the article to the event list,
+			// so if there is none, we'll move on with the next article
 			if(!($data['eventlist_weekday'] && $data['eventlist_starttime'])) continue;
 			
 			// Create event info array
@@ -58,16 +56,30 @@ class ModEventListHelper
 			if($data['eventlist_endtime']) $eventInfo['endtime'] = $data['eventlist_endtime'];
 			if($data['eventlist_comment']) $eventInfo['comment'] = $data['eventlist_comment'];
 			
-			// Add to the correct day
 			$days[(int)$data['eventlist_weekday'] - 1][] = $eventInfo;
 		}
 		
 		// Sort by starttime
-		$sorting = array();
-		foreach($days as $day) $sorting[$day['article_id']] = $day['starttime'];
-		asort($sorting);
-		$sortedDays = array_fill(0, count($sorting), null);
-		HIER WEITER
+		$sortedDays = array();
+		foreach($days as $day) {
+			$sorting = array();
+			foreach($day as $event) {
+				$sorting[$event['article_id']] = $event['starttime'];
+			}
+			asort($sorting);
+			
+			$sortedDay = array();
+			foreach($sorting as $articleId => $starttime) {
+				foreach($day as $event) {
+					if($event['article_id'] == $articleId) {
+						$sortedDay[] = $event;
+						break;
+					}
+				}
+			}
+			
+			$sortedDays[] = $sortedDay;
+		}
 		
 		//
 		// Step 2: Get the required content form the articles and build the return array
@@ -77,7 +89,7 @@ class ModEventListHelper
 		$dayCounter = 0;
 		
 		// For each day of the week ...		
-		foreach($sortedDays as &$sortedDay) {
+		foreach($sortedDays as $sortedDay) {
 			$dayCounter++;
 			if(!empty($sortedDay)) {
 				$articleIds = array_column($sortedDay, 'article_id');
@@ -111,32 +123,29 @@ class ModEventListHelper
 					$itemsToPublish = array_merge($itemsToPublish, $model->getItems());
 				}
 				
-				$dayEvents = array_fill(0, count($itemsToPublish), null);
+				$dayEvents = array();
 			
 				// Build return array for the day
-			    foreach ($itemsToPublish as $item)
-			    {
-		          // Add event to return array
-		          $eventData = array();
-		          $key = 0;
-		          foreach($sortedDay as $event) {
-		          	if($event['article_id'] == $item->id) break;
-		          	$key++;
-		          }
-		          $eventData['startingtime'] = $sortedDay[$key]['starttime'];
-		          if($sortedDay[$key]['endtime']) {$eventData['endtime'] = $sortedDay[$key]['endtime'];} else {$eventData['endtime'] = null;}
-		          if($sortedDay[$key]['comment']) {$eventData['comment'] = $sortedDay[$key]['comment'];} else {$eventData['comment'] = null;}
-		          
-					// Include URL only for published articles			          
-		          if($item->state == 1) $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
-		          
-		          $eventData['title'] = $item->title;
-		          
-		          // Sort eventData into right position
-		          foreach($articleIds as $position => $articleId) {
-		          	if($articleId == $item->id) {$dayEvents[$position] = $eventData;}
-		          }
+				foreach($sortedDay as $event) {
+					$eventData = array();
+					foreach($itemsToPublish as $item) {
+						if($event['article_id'] == $item->id) {
+							// Only if an article is found in the itemsToPublish, we fill in the eventData
+							$eventData['startingtime'] = $event['starttime'];
+				          if($event['endtime']) {$eventData['endtime'] = $event['endtime'];} else {$eventData['endtime'] = null;}
+				          if($event['comment']) {$eventData['comment'] = $event['comment'];} else {$eventData['comment'] = null;}
+				          $eventData['title'] = $item->title;
+
+							// Include URL only for published articles			          
+				          if($item->state == 1) $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
+							break;
+						}
+					}
+					$dayEvents[] = $eventData;
 				}
+				
+				// By using the array_filter method, we make sure that there's no empty element in the event list
+				// (e.g. when an article has a weekday assigned but should not be publised)				
 		      $eventList[$dayCounter] = array_filter($dayEvents);
 			} else {
 				$eventList[$dayCounter] = null;
