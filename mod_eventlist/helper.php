@@ -29,6 +29,10 @@ class ModEventListHelper
 	 	// Get the database object
 		$db = JFactory::getDbo();	 	
 		
+		//		
+		// Step 1: Get all relevant article IDs sorted by (1) day and (2) starttime
+		//
+		
 		// Get all entries from #__content_eventlist that have data
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('article_id', 'data')))
@@ -57,47 +61,25 @@ class ModEventListHelper
 			// Add to the correct day
 			$days[(int)$data['eventlist_weekday'] - 1][] = $eventInfo;
 		}
-		print_r($days);
 		
 		// Sort by starttime
 		$sortedDays = array();
 		foreach($days as $day) {
 			$sortedDays[] = ArrayHelper::sortObjects($day, 'starttime');
 		}
-		print_r($sortedDays); return;
 		
-		// Get the article content and URL for every day
-		
+		//
+		// Step 2: Get the required content form the articles and build the return array
+		//
 		
 		$eventList = array();
+		$dayCounter = 0;
 		
 		// For each day of the week ...		
-		for ($day = 1; $day <= 7; $day++)
-		{
-			// Retrieve the article IDs (item_id) sorted by starting date as an associated array with following SQL query:
-			// SELECT `item_id`,`value` FROM `jos_fields_values` WHERE `field_id`=$startzeit AND `item_id` IN
-			// (SELECT `item_id` FROM `jos_fields_values` WHERE `field_id`=$wochentag AND `value`=$day)
-			// ORDER BY `value`
-			$subQuery = $db->getQuery(true)
-				->select('item_id')
-				->from($db->quoteName('#__fields_values'))
-				->where(
-					$db->quoteName('field_id') . ' = ' . $db->quote($wochentag) . ' AND ' . 
-					$db->quoteName('value') . ' = ' . $db->quote($day)
-				);
-			$query = $db->getQuery(true)
-				->select($db->quoteName(array('item_id', 'value')))
-	          ->from($db->quoteName('#__fields_values'))
-	          ->where(
-	          	$db->quoteName('field_id') . ' = ' . $db->quote($startzeit) . ' AND ' .
-	           	$db->quoteName('item_id') . ' IN (' . $subQuery . ')'
-	          )
-	          ->order('value');
-			$db->setQuery($query);
-			$result = $db->loadAssocList();
-			
-			if(array_filter($result)) {
-				$articleIds = ArrayHelper::getColumn($result, 'item_id');
+		foreach($sortedDays as &$sortedDay) {
+			$dayCounter++;
+			if(!empty($sortedDay)) {
+				$articleIds = array_column($sortedDay, 'article_id');
 						
 				// Get an instance of the generic articles model
 				$model = JModelLegacy::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
@@ -120,75 +102,43 @@ class ModEventListHelper
 				$model->setState('filter.access', $access);
 				
 				// Retrieve published content
-				$publishedItems = $model->getItems();
+				$itemsToPublish = $model->getItems();
 				
 				// Get non-published items if requested
 				if ($params['showdespitenotpublished']) {
 					$model->setState('filter.published', 0);
-					$publishedItems = array_merge($publishedItems, $model->getItems());
+					$itemsToPublish = array_merge($itemsToPublish, $model->getItems());
 				}
 				
-				$dayEvents = array_fill(0, count($articleIds), null);
-				if(array_filter($publishedItems)) {
+				$dayEvents = array_fill(0, count($itemsToPublish), null);
 			
-					// Build return array for the day
-				    foreach ($publishedItems as $item)
-				    {
-				       // Get startingtime
-						$query = $db->getQuery(true)
-			            ->select($db->quoteName('value'))
-			            ->from($db->quoteName('#__fields_values'))
-			            ->where(
-			            		$db->quoteName('field_id') . ' = ' . $db->quote($startzeit) . ' AND ' .
-			            		$db->quoteName('item_id') . ' = ' . $db->quote($item->id)
-			            	);
-			          $db->setQuery($query);
-			          $startingtime = $db->loadResult();
-			 			
-						// Get endtime
-						$query = $db->getQuery(true)
-			            ->select($db->quoteName('value'))
-			            ->from($db->quoteName('#__fields_values'))
-			            ->where(
-			            		$db->quoteName('field_id') . ' = ' . $db->quote($endzeit) . ' AND ' .
-			            		$db->quoteName('item_id') . ' = ' . $db->quote($item->id)
-			            	);
-			          $db->setQuery($query);
-			          $endtime = $db->loadResult();
-			          
-			          // Get comment
-						$query = $db->getQuery(true)
-			            ->select($db->quoteName('value'))
-			            ->from($db->quoteName('#__fields_values'))
-			            ->where(
-			            		$db->quoteName('field_id') . ' = ' . $db->quote($kommentar) . ' AND ' .
-			            		$db->quoteName('item_id') . ' = ' . $db->quote($item->id)
-			            	);
-			          $db->setQuery($query);
-			          $comment = $db->loadResult();
-			          
-			          // Add event to return array
-			          $eventData = array();
-			          $eventData['startingtime'] = $startingtime;
-			          if($endtime) {$eventData['endtime'] = $endtime;} else {$eventData['endtime'] = null;}
-			          if($comment) {$eventData['comment'] = $comment;} else {$eventData['comment'] = null;}
-			          
-						// Include URL only for published articles			          
-			          if($item->state == 1) $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
-			          
-			          $eventData['title'] = $item->title;
-			          
-			          // Sort eventData into right position
-			          foreach($articleIds as $position => $articleId) {
-			          	if($articleId == $item->id) {$dayEvents[$position] = $eventData;}
-			          }
-					}
-				} else {
-					$dayEvents[] = null;
+				// Build return array for the day
+			    foreach ($itemsToPublish as $item)
+			    {
+		          // Add event to return array
+		          $eventData = array();
+		          $key = 0;
+		          foreach($sortedDay as $event) {
+		          	if($event['article_id'] == $item->id) break;
+		          	$key++;
+		          }
+		          $eventData['startingtime'] = $sortedDay[$key]['starttime'];
+		          if($sortedDay[$key]['endtime']) {$eventData['endtime'] = $sortedDay[$key]['endtime'];} else {$eventData['endtime'] = null;}
+		          if($sortedDay[$key]['comment']) {$eventData['comment'] = $sortedDay[$key]['comment'];} else {$eventData['comment'] = null;}
+		          
+					// Include URL only for published articles			          
+		          if($item->state == 1) $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
+		          
+		          $eventData['title'] = $item->title;
+		          
+		          // Sort eventData into right position
+		          foreach($articleIds as $position => $articleId) {
+		          	if($articleId == $item->id) {$dayEvents[$position] = $eventData;}
+		          }
 				}
-		      $eventList[$day] = array_filter($dayEvents);
+		      $eventList[$dayCounter] = array_filter($dayEvents);
 			} else {
-				$eventList[$day] = null;
+				$eventList[$dayCounter] = null;
 			}
 		} 
 		
