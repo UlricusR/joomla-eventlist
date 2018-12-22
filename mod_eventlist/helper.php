@@ -63,10 +63,11 @@ class ModEventListHelper
 		}
 		
 		// Sort by starttime
-		$sortedDays = array();
-		foreach($days as $day) {
-			$sortedDays[] = ArrayHelper::sortObjects($day, 'starttime');
-		}
+		$sorting = array();
+		foreach($days as $day) $sorting[$day['article_id']] = $day['starttime'];
+		asort($sorting);
+		$sortedDays = array_fill(0, count($sorting), null);
+		HIER WEITER
 		
 		//
 		// Step 2: Get the required content form the articles and build the return array
