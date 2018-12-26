@@ -170,7 +170,7 @@ class plgContentEventlist extends JPlugin
 				$query->from('#__content_eventlist');
 				$query->where('article_id = '.$db->Quote($articleId));
 				$db->setQuery($query);
-				$results = $db->loadObject();
+				$results = (array)$db->loadObject();
 
 				// Check for a database error
 				if ($db->getErrorNum())
@@ -179,7 +179,7 @@ class plgContentEventlist extends JPlugin
 					return false;
 				}
 				
-				$eventdata = ($results && count($results)) ? json_decode(json_decode($results->data)) : new stdClass;
+				$eventdata = (count($results)) ? json_decode(json_decode($results->data)) : new stdClass;
 
 				// Merge the data
 				$data->attribs = array();
