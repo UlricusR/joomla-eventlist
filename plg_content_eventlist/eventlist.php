@@ -179,7 +179,7 @@ class plgContentEventlist extends JPlugin
 					return false;
 				}
 				
-				$eventdata = (count($results)) ? json_decode(json_decode($results->data)) : new stdClass;
+				$eventdata = ($results && count($results)) ? json_decode(json_decode($results->data)) : new stdClass;
 
 				// Merge the data
 				$data->attribs = array();
