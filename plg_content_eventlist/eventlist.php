@@ -25,6 +25,15 @@ class plgContentEventlist extends JPlugin
 	/** var array List of fields to look for in the $attribs */
 	protected $eventfields;
 	
+	/** var string Category */
+	protected $category;
+	
+	/** var boolean Limit plugin to selected category */
+	protected $limit_to_category;
+	
+	/** var boolean Include child categories */
+	protected $include_child_categories;
+	
 	public function __construct(& $subject, $config)
 	{
 		// We only want to use this with com_content
@@ -103,46 +112,6 @@ class plgContentEventlist extends JPlugin
 		JForm::addFormPath(dirname(__FILE__) . '/extras');
 		$form->loadFile('eventparams', false);
 
-		// Load the data from table into the form
-		$articleId = isset($data->id) ? $data->id : 0;
-		
-		// If there is already an $articleId, then the article is in edit mode 
-		// and we need to retrieve the data from the database
-		if ($articleId)
-		{
-			// Load the data from the database
-			$db = JFactory::getDbo();
-			$query = $db->getQuery(true);
-			$query->select('article_id, data');
-			$query->from('#__content_eventlist');
-			$query->where('article_id = '.$db->Quote($articleId));
-			$db->setQuery($query);
-		
-			$attribs = $db->loadObject();
-
-			// Check for a database error.
-			if ($db->getErrorNum())
-			{
-				$this->_subject->setError($db->getErrorMsg());
-				return false;
-			}
-
-			// json_decode the data
-			if (!empty($attribs->data))
-			{
-				$eventdata = json_decode(json_decode($attribs->data));
-			}
-		}
-		
-		// fill in the form with data
-		if(isset($attribs))
-		{
-			foreach ($this->eventfields as $eventfield)
-			{
-				$data->attribs[$eventfield] = isset($eventdata->$eventfield) ? $eventdata->$eventfield : '';
-			}
-		}
-
 		return true;
 	}
 
@@ -170,7 +139,7 @@ class plgContentEventlist extends JPlugin
 				$query->from('#__content_eventlist');
 				$query->where('article_id = '.$db->Quote($articleId));
 				$db->setQuery($query);
-				$results = (array)$db->loadObject();
+				$results = $db->loadAssoc();
 
 				// Check for a database error
 				if ($db->getErrorNum())
@@ -179,14 +148,14 @@ class plgContentEventlist extends JPlugin
 					return false;
 				}
 				
-				$eventdata = (count($results)) ? json_decode(json_decode($results->data)) : new stdClass;
+				$eventdata = ($results && count($results) == 1) ? json_decode(json_decode($results['data'])) : new stdClass();
 
 				// Merge the data
 				$data->attribs = array();
 
 				foreach ($this->eventfields as $eventfield)
 				{
-					$data->attribs[$eventdata] = isset($eventdata->$eventfield) ? $eventdata->$eventfield : '';
+					$data->attribs[$eventfield] = isset($eventdata->$eventfield) ? $eventdata->$eventfield : '';
 				}
 			}
 			else
