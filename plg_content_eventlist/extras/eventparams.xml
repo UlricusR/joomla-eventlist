@@ -3,6 +3,16 @@
 	<fields name="attribs" addrulepath="/plugins/content/eventlist/models/rules">
 		<fieldset name="eventinfo" label="PLG_CONTENT_EVENTLIST_FIELDSET_EVENTINFO">
 			<field
+				name="eventlist_show"
+				type="radio"
+				required="true"
+				label="PLG_EVENTLIST_FIELD_SHOW"
+				default="1"
+				description="PLG_EVENTLIST_FIELD_SHOW_DESC">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+			<field
 				name="eventlist_contactperson"
 				type="text"
 				label="PLG_CONTENT_EVENTLIST_PARAM_CONTACTPERSON"
