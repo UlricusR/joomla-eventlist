@@ -29,6 +29,7 @@ class JFormRuleTime extends JFormRule
     	}
     	
     	// Return error message
+    	/**
     	$elementName = "unknown element";
     	echo $element->attributes()->name;
     	switch ($element->attributes()->name) {
@@ -38,8 +39,8 @@ class JFormRuleTime extends JFormRule
     		case 'eventlist_endtime':
     			$elementName = JText::_('PLG_CONTENT_EVENTLIST_PARAM_ENDTIME');
     			break;
-    	}
-    	$element->addAttribute('message', JText::_('PLG_EVENTLIST_ERR_TIMEFORMAT').$elementName,'/'.$format.'/'.$value);
+    	}*/
+    	$element->addAttribute('message', JText::_('PLG_EVENTLIST_ERR_TIMEFORMAT').JText::_($element->attributes()->label).'/'.$format.'/'.$value);
     	return false;
     }
 }
