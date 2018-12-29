@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <form>
-	<fields name="attribs">
+	<fields name="attribs" addrulepath="/plugins/content/eventlist/models/rules">
 		<fieldset name="eventinfo" label="PLG_CONTENT_EVENTLIST_FIELDSET_EVENTINFO">
 			<field
 				name="eventlist_contactperson"
@@ -21,7 +21,7 @@
 				type="tel"
 				label="PLG_CONTENT_EVENTLIST_PARAM_PHONE"
 				description="PLG_CONTENT_EVENTLIST_PARAM_PHONE_DESC"
-				hint="e.g.: 0123/456789"
+				hint="e.g.: 0123 456789"
 				validate="tel"
 			/>
 			<field
@@ -55,15 +55,17 @@
 				name="eventlist_starttime"
 				type="text"
 				label="PLG_CONTENT_EVENTLIST_PARAM_STARTTIME"
-				hint="e.g.: 19:30 or 7:30 pm"
+				hint="e.g.: 19:30 or 07:30 PM"
 				description="PLG_CONTENT_EVENTLIST_PARAM_STARTTIME_DESC"
+				validate="time"
 			/>
 			<field
 				name="eventlist_endtime"
 				type="text"
 				label="PLG_CONTENT_EVENTLIST_PARAM_ENDTIME"
-				hint="e.g.: 21:00 or 9:00 pm"
+				hint="e.g.: 21:00 or 09:00 PM"
 				description="PLG_CONTENT_EVENTLIST_PARAM_ENDTIME_DESC"
+				validate="time"
 			/>
 			<field
 				name="eventlist_comment"

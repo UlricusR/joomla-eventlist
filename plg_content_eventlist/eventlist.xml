@@ -17,7 +17,32 @@
 		<folder>language</folder>
 		<folder>sql</folder>
 		<folder>extras</folder>
+		<folder>models</folder>
 	</files>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="plg_eventlist_timeformat"
+					type="list"
+					required="true"
+					default="H:i"
+					label="PLG_EVENTLIST_FIELD_TIMEFORMAT"
+					description="PLG_EVENTLIST_FIELD_TIMEFORMAT_DESC">
+					<option value="H:i">PLG_EVENTLIST_FIELD_TIMEFORMAT_24</option>
+					<option value="h:i A">PLG_EVENTLIST_FIELD_TIMEFORMAT_12</option>
+					<option value="free">PLG_EVENTLIST_FIELD_TIMEFORMAT_FREE</option>
+				</field>
+				<field
+					name="plg_eventlist_timeformat_free"
+					type="text"
+					label="PLG_EVENTLIST_FIELD_FREE"
+					description="PLG_EVENTLIST_FIELD_FREE_DESC"
+					showon="plg_eventlist_timeformat:free"/>
+			</fieldset>
+		</fields>
+	</config>
 	
 	<install>
 		<sql>
