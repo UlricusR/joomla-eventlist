@@ -28,11 +28,11 @@ if(array_filter($eventList)) {
 			echo "<ul>";
 			foreach($day as $event) {
 				echo "<li>";
-				echo $event['startingtime'];
-				if($event['endtime']) {echo "-".$event['endtime'];}
-				echo " Uhr";
+				if($event['startingtime']) echo $event['startingtime'];
+				if($event['endtime']) echo "-".$event['endtime'];
+				if($event['startingtime']) echo " Uhr";
 				if($event['comment']) {echo " (".$event['comment'].")";}
-				echo ": ";
+				if($event['startingtime']) echo ": ";
 				if ($event['url']) echo "<a href=".$event['url'].">".$event['title']."</a>";
 				else echo $event['title'];
 				echo "</li>";

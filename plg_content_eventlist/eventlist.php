@@ -60,6 +60,7 @@ class plgContentEventlist extends JPlugin
 	protected function setEventFields()
 	{
 		$eventfields = array (
+			'eventlist_show',
 			'eventlist_contactperson',
 			'eventlist_email',
 			'eventlist_phone',

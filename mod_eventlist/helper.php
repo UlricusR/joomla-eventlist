@@ -45,9 +45,9 @@ class ModEventListHelper
 		foreach($articles as $article) {
 			$data = json_decode(json_decode($article['data'], $assoc = true), $assoc = true);
 			
-			// We need at least weekday and starttime for adding the article to the event list,
+			// We need the "show article" parameter and the weekday set
 			// so if there is none, we'll move on with the next article
-			if(!($data['eventlist_weekday'] && $data['eventlist_starttime'])) continue;
+			if(!((bool)$data['eventlist_show'] && $data['eventlist_weekday'])) continue;
 			
 			// Create event info array
 			$eventInfo = array();

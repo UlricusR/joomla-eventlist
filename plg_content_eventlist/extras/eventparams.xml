@@ -76,6 +76,7 @@
 				hint="e.g.: 21:00 or 09:00 PM"
 				description="PLG_CONTENT_EVENTLIST_PARAM_ENDTIME_DESC"
 				validate="time"
+				showon="eventlist_starttime!:"
 			/>
 			<field
 				name="eventlist_comment"
