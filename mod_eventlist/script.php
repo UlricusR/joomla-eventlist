@@ -38,7 +38,7 @@ class mod_eventListInstallerScript
 	 */
 	function update($parent) 
 	{
-		echo '<p>The module has been updated to version' . $parent->get('manifest')->version . '</p>';
+		echo '<p>The module has been updated to version ' . $parent->get('manifest')->version . '</p>';
 	}
 
 	/**
