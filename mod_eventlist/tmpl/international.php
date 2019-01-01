@@ -13,7 +13,7 @@ if(array_filter($eventList)) {
 
 	// Add CSS
 	$doc = JFactory::getDocument();
-	$doc->addStyleSheet(JURI::base(true).'/plugins/content/eventlist/css/eventlist.css');
+	$doc->addStyleSheet(JURI::base(true).'/modules/mod_eventlist/css/eventlist.css');
 
 	// Define weekdays
 	$weekdays = explode(',', $language->_("MOD_EVENTLIST_WEEKDAYS"));

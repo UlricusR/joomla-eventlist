@@ -66,7 +66,16 @@ class ModEventListHelper
 			foreach($day as $event) {
 				$sorting[$event['article_id']] = $event['starttime'];
 			}
-			asort($sorting);
+			uasort($sorting, function($a, $b)
+				{
+					$ad = new DateTime($a);
+					$bd = new DateTime($b);
+					if ($ad == $bd) {
+      					return 0;
+   					}
+   					return ($ad < $bd) ? -1 : 1;
+				}
+			);
 			
 			$sortedDay = array();
 			foreach($sorting as $articleId => $starttime) {

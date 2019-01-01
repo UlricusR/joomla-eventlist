@@ -30,8 +30,10 @@
 					default="H:i"
 					label="PLG_EVENTLIST_FIELD_TIMEFORMAT"
 					description="PLG_EVENTLIST_FIELD_TIMEFORMAT_DESC">
-					<option value="H:i">PLG_EVENTLIST_FIELD_TIMEFORMAT_24</option>
-					<option value="h:i A">PLG_EVENTLIST_FIELD_TIMEFORMAT_12</option>
+					<option value="H:i">PLG_EVENTLIST_FIELD_TIMEFORMAT_24_LONG</option>
+					<option value="h:i A">PLG_EVENTLIST_FIELD_TIMEFORMAT_12_LONG</option>
+					<option value="G:i">PLG_EVENTLIST_FIELD_TIMEFORMAT_24_SHORT</option>
+					<option value="g:i A">PLG_EVENTLIST_FIELD_TIMEFORMAT_12_SHORT</option>
 					<option value="free">PLG_EVENTLIST_FIELD_TIMEFORMAT_FREE</option>
 				</field>
 				<field
