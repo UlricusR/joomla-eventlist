@@ -118,7 +118,7 @@ class ModEventListHelper
 				$itemsToPublish = $model->getItems();
 				
 				// Get non-published items if requested
-				if ($params['showdespitenotpublished']) {
+				if ($params['eventlist_showdespitenotpublished']) {
 					$model->setState('filter.published', 0);
 					$itemsToPublish = array_merge($itemsToPublish, $model->getItems());
 				}

@@ -31,7 +31,7 @@
 	   <fields name="params">
 	   		<fieldset name="basic">
 				<field
-					name="showdespitenotpublished"
+					name="eventlist_showdespitenotpublished"
 					type="radio"
 	   				required="true"
 					label="MOD_EVENTLIST_FIELD_SHOWDESPITENOTPUBLISHED"
@@ -40,6 +40,41 @@
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
+				<field
+					name="eventlist_timeseparator"
+					type="text"
+					label="MOD_EVENTLIST_FIELD_TIMESEPARATOR"
+					description="MOD_EVENTLIST_FIELD_TIMESEPARATOR_DESC"
+					default="-"
+					hint="e.g. '-' or ' to '"/>
+				<field
+					name="eventlist_aftertime"
+					type="text"
+					label="MOD_EVENTLIST_FIELD_AFTERTIME"
+					description="MOD_EVENTLIST_FIELD_AFTERTIME_DESC"
+					default=" Uhr"
+					hint="e.g. ' Uhr' or 'o'clock'"/>
+				<field
+					name="eventlist_beforecomment"
+					type="text"
+					label="MOD_EVENTLIST_FIELD_BEFORECOMMENT"
+					description="MOD_EVENTLIST_FIELD_BEFORECOMMENT_DESC"
+					default=" ("
+					hint="e.g. ' ('"/>
+				<field
+					name="eventlist_aftercomment"
+					type="text"
+					label="MOD_EVENTLIST_FIELD_AFTERCOMMENT"
+					description="MOD_EVENTLIST_FIELD_AFTERCOMMENT_DESC"
+					default="): "
+					hint="e.g. '): '"/>
+				<field
+					name="eventlist_beforetitle"
+					type="text"
+					label="MOD_EVENTLIST_FIELD_BEFORETITLE"
+					description="MOD_EVENTLIST_FIELD_BEFORETITLE_DESC"
+					default="): "
+					hint="e.g. '): '"/>
 			</fieldset>
 		</fields>
 	</config>

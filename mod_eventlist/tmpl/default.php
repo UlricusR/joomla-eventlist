@@ -2,10 +2,6 @@
 // No direct access
 defined('_JEXEC') or die;
 
-use Joomla\Utilities\ArrayHelper;
-
-//print_r($eventList);
-
 if(array_filter($eventList)) {
 	
 	// Load language file, set default language to en-GB
