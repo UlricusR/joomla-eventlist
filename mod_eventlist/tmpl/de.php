@@ -6,7 +6,7 @@ if(array_filter($eventList)) {
 	
 	// Load language file, set default language to en-GB
 	$language =& JFactory::getLanguage();
-	$language->setDefault('en-GB');
+	$language->setDefault('de-DE');
 	$extension = 'mod_eventlist';
 	$base_dir = JPATH_SITE;
 	$language->load($extension, $base_dir, $language->getTag(), true);
@@ -29,10 +29,10 @@ if(array_filter($eventList)) {
 			foreach($day as $event) {
 				echo '<li>';
 				if($event['startingtime']) echo $event['startingtime'];
-				if($event['endtime']) echo $params['eventlist_timeseparator'].$event['endtime'];
-				if($event['startingtime']) echo $params['eventlist_aftertime'];
-				if($event['comment']) echo $params['eventlist_beforecomment'].$event['comment'].$params['eventlist_aftercomment'];
-				if($event['startingtime']) echo $params['eventlist_beforetitle'];
+				if($event['endtime']) echo '-'.$event['endtime'];
+				if($event['startingtime']) echo ' Uhr';
+				if($event['comment']) echo ' ('.$event['comment'].')';
+				if($event['startingtime']) echo ': ';
 				if ($event['url']) echo '<a href="'.$event['url'].'">'.$event['title'].'</a>';
 				else echo $event['title'];
 				echo '</li>';

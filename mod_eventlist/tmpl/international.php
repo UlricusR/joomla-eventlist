@@ -13,7 +13,7 @@ if(array_filter($eventList)) {
 
 	// Add CSS
 	$doc = JFactory::getDocument();
-	$doc->addStyleSheet(JURI::base(true).'/modules/mod_eventlist/css/eventlist.css');
+	$doc->addStyleSheet(JURI::base(true).'/plugins/content/eventlist/css/eventlist.css');
 
 	// Define weekdays
 	$weekdays = explode(',', $language->_("MOD_EVENTLIST_WEEKDAYS"));
@@ -29,10 +29,10 @@ if(array_filter($eventList)) {
 			foreach($day as $event) {
 				echo '<li>';
 				if($event['startingtime']) echo $event['startingtime'];
-				if($event['endtime']) echo $params['eventlist_timeseparator'].$event['endtime'];
-				if($event['startingtime']) echo $params['eventlist_aftertime'];
-				if($event['comment']) echo $params['eventlist_beforecomment'].$event['comment'].$params['eventlist_aftercomment'];
-				if($event['startingtime']) echo $params['eventlist_beforetitle'];
+				if($event['endtime']) echo '-'.$event['endtime'];
+				//if($event['startingtime']) echo ' Uhr';
+				if($event['comment']) echo ' ('.$event['comment'].')';
+				if($event['startingtime']) echo ': ';
 				if ($event['url']) echo '<a href="'.$event['url'].'">'.$event['title'].'</a>';
 				else echo $event['title'];
 				echo '</li>';

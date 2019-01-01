@@ -19,4 +19,4 @@ $params = new JRegistry($module->params);
 
 $eventList = modEventListHelper::getList($params);
 	
-require JModuleHelper::getLayoutPath('mod_eventlist');
+require JModuleHelper::getLayoutPath('mod_eventlist', $params['eventlist_template']);

@@ -21,8 +21,8 @@
        <filename module="mod_eventlist">mod_eventlist.php</filename>
        <filename>index.html</filename>
        <filename>helper.php</filename>
-       <filename>tmpl/default.php</filename>
-       <filename>tmpl/index.html</filename>
+       <folder>tmpl</folder>
+       <folder>css</folder>
    </files>
 
    <scriptfile>script.php</scriptfile>
@@ -41,10 +41,22 @@
 					<option value="0">JNO</option>
 				</field>
 				<field
+					name="eventlist_template"
+					type="list"
+	   				required="true"
+					label="MOD_EVENTLIST_FIELD_TEMPLATE"
+					default="international"
+					description="MOD_EVENTLIST_FIELD_TEMPLATE_DESC">
+					<option value="international">MOD_EVENTLIST_FIELD_TEMPLATE_INT</option>
+					<option value="de">MOD_EVENTLIST_FIELD_TEMPLATE_DE</option>
+					<option value="default">MOD_EVENTLIST_FIELD_TEMPLATE_FREE</option>
+				</field>
+				<field
 					name="eventlist_timeseparator"
 					type="text"
 					label="MOD_EVENTLIST_FIELD_TIMESEPARATOR"
 					description="MOD_EVENTLIST_FIELD_TIMESEPARATOR_DESC"
+					showon="eventlist_template:default"
 					default="-"
 					hint="e.g. '-' or ' to '"/>
 				<field
@@ -52,6 +64,7 @@
 					type="text"
 					label="MOD_EVENTLIST_FIELD_AFTERTIME"
 					description="MOD_EVENTLIST_FIELD_AFTERTIME_DESC"
+					showon="eventlist_template:default"
 					default=" Uhr"
 					hint="e.g. ' Uhr' or 'o'clock'"/>
 				<field
@@ -59,6 +72,7 @@
 					type="text"
 					label="MOD_EVENTLIST_FIELD_BEFORECOMMENT"
 					description="MOD_EVENTLIST_FIELD_BEFORECOMMENT_DESC"
+					showon="eventlist_template:default"
 					default=" ("
 					hint="e.g. ' ('"/>
 				<field
@@ -66,15 +80,17 @@
 					type="text"
 					label="MOD_EVENTLIST_FIELD_AFTERCOMMENT"
 					description="MOD_EVENTLIST_FIELD_AFTERCOMMENT_DESC"
-					default="): "
-					hint="e.g. '): '"/>
+					showon="eventlist_template:default"
+					default=")"
+					hint="e.g. ')'"/>
 				<field
 					name="eventlist_beforetitle"
 					type="text"
 					label="MOD_EVENTLIST_FIELD_BEFORETITLE"
 					description="MOD_EVENTLIST_FIELD_BEFORETITLE_DESC"
-					default="): "
-					hint="e.g. '): '"/>
+					showon="eventlist_template:default"
+					default=": "
+					hint="e.g. ': '"/>
 			</fieldset>
 		</fields>
 	</config>
