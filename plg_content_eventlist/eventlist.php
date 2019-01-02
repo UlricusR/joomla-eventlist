@@ -278,37 +278,86 @@ class plgContentEventlist extends JPlugin
 	 */
 	public function onContentPrepare($context, &$article, &$params, $page = 0)
 	{
-		if (!isset($article->eventparams) || !count($article->eventparams))
+		// Get article attribs
+		$attribs = json_decode($article->attribs);
+		
+		// Extract the eventdata attribs
+		$eventdata = array();
+		foreach ($this->eventfields as $eventfield)
+		{
+			if (!empty(trim($attribs->$eventfield))) $eventdata[$eventfield] = $attribs->$eventfield;
+		}
+
+		if (!count($eventdata))
 		{
 			return;
 		}
 
-		// add extra css for table
+		// Add CSS for table
 		$doc = JFactory::getDocument();
-		//$doc->addStyleSheet(JURI::base(true).'/plugins/content/eventlist/extras/eventlist.css');
+		$doc->addStyleSheet(JURI::base(true).'/plugins/content/eventlist/extras/eventinfo.css');
 
-		// construct a result table on the fly   
-		jimport('joomla.html.grid');
-		$table = new JGrid();
-
-		// Create columns
-		$table->addColumn('attr')->addColumn('value');   
-
-		// populate
+		// Load form & fieldset
+		$file = __DIR__ . '/extras/eventparams.xml';
+		$form = new JForm('eventparams');
+		$form->loadFile($file);
+		$fieldSet = $form->getFieldset('eventinfo');
+		//$form = JForm::getInstance('eventparams', dirname(__FILE__) . '/extras/eventparams.xml');
+		//$fieldSet = $form->getFieldSet('eventinfo');
+		
+		// Get xml and check if it's valid		
+		$xml = $form->getXml();
+		if (!($xml instanceof \SimpleXMLElement)) return;
+		
+		// Get weekday options
+		#$group = 'attribs';
+		$fieldName = 'eventlist_weekday';
+		#$attribsGroupAsXML = $xml->xpath('//fields[@name="' . $group . '" and not(ancestor::field/form/*)]');
+		$fieldAsXMLArray = $xml->xpath('//field[@name="' . $fieldName . '" and not(ancestor::field/form/*)]');
+		$options = $fieldAsXMLArray[0]->xpath('option');
+		$weekdays = [];
+		foreach ($options as $option) {
+		    $value = (string) $option['value'];
+		    $text  = trim((string) $option) != '' ? trim((string) $option) : $value;
+		    $weekdays[$value] = $text;
+		}
+		
+		// Construct and populate a result table on the fly
+		$table = '<table><tbody>';
 		$rownr = 0;
-		foreach ($article->eventparams as $attr => $value)
+		foreach ($eventdata as $attr => $value)
 		{
-			$table->addRow(array('class' => 'row'.($rownr % 2)));
-			$table->setRowCell('attr', $attr);
-			$table->setRowCell('value', $value);
+			// Initiate new table row
+			$table .= '<tr class="row'.($rownr % 2).'">';
+			
+			// Get the field's local label and the local weekday string
+			$label = "";
+			foreach ($fieldSet as $field) {
+				$fieldName = $field->getAttribute('name');
+				if ($fieldName == $attr) {
+					$label = JText::_($field->getAttribute('label'));
+					if ($fieldName == 'eventlist_weekday') {
+						$value = JText::_($weekdays[(int)$value]);
+					}
+					break;
+				}
+			}			
+			
+			// Populate table row
+			$table .= '<td class="eventinfo_label">'.$label.'</td>';
+			$table .= '<td class="eventinfo_value">'.$value.'</td>';
+			
+			// Close table row and increase row number
+			$table .= '</tr>';
 			$rownr++;
 		}
+		$table .= '</tbody></table>';
 
-		// wrap table in a classed <div>
+		// Wrap table in a classed <div>
 		$suffix = $this->params->get('eventparamsclass_sfx', 'eventparams');
-		$html = '<div class="'.$suffix.'">'.(string)$table.'</div>';
+		$html = '<div class="'.$suffix.'">'.$table.'</div>';
 
-		$article->text = $html.$article->text;
+		$article->text .= $html;
 	}
 
 	 /**
