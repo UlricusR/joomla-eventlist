@@ -325,8 +325,10 @@ class plgContentEventlist extends JPlugin
 		// Construct and populate a result table on the fly
 		$table = '<table><tbody>';
 		$rownr = 0;
-		foreach ($eventdata as $attr => $value)
-		{
+		foreach ($eventdata as $attr => $value) {
+			// Don't display the eventlist_show field
+			if ($attr == 'eventlist_show') continue;		
+			
 			// Initiate new table row
 			$table .= '<tr class="row'.($rownr % 2).'">';
 			
