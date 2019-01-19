@@ -114,6 +114,7 @@ class ModEventListHelper
 				// Set the filters based on the module params
 				$model->setState('filter.published', 1);
 				$model->setState('filter.article_id', $articleIds);
+				$model->setState('filter.category_id', $params['eventlist_categories']);
 		
 				// This module does not use tags data
 				$model->setState('load_tags', false);

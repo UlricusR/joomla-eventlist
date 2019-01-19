@@ -4,12 +4,12 @@
    <author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
 	<authorUrl>https://rueth.info</authorUrl>
-	<creationDate>01.01.2019</creationDate>
+	<creationDate>19.01.2019</creationDate>
 	<copyright>Copyright (C) 2018-2019 Ulrich Rueth</copyright>
 	<license>Code released under the [GNU GPL 3.0]
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
 	</license>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
    <description>MOD_EVENTLIST_DESC</description>
 
 	<updateservers>
@@ -40,6 +40,14 @@
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
 				</field>
+				<field
+					name="eventlist_categories"
+					type="category"
+					extension="com_content"
+					published="1"
+					label="MOD_EVENTLIST_FIELD_CATEGORIES"
+					description="MOD_EVENTLIST_FIELD_CATEGORIES_DESC"
+					multiple="true"/>
 				<field
 					name="eventlist_template"
 					type="list"
