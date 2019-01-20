@@ -42,6 +42,14 @@
 					label="PLG_EVENTLIST_FIELD_FREE"
 					description="PLG_EVENTLIST_FIELD_FREE_DESC"
 					showon="plg_eventlist_timeformat:free"/>
+				<field
+					name="plg_eventlist_displaystyle"
+					type="list"
+					default="border_title"
+					label="PLG_EVENTLIST_FIELD_DISPLAYSTYLE"
+					description="PLG_EVENTLIST_FIELD_DISPLAYSTYLE_DESC">
+					<option value="plain">PLG_EVENTLIST_FIELD_DISPLAYSTYLE_PLAIN</option>
+				</field>
 			</fieldset>
 		</fields>
 	</config>
