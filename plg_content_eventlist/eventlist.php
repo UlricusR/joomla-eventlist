@@ -25,11 +25,11 @@ class plgContentEventlist extends JPlugin
 	/** var array List of fields to look for in the $attribs */
 	protected $eventfields;
 	
-	/** var string Category */
-	protected $category;
+	/** var string Categories */
+	protected $categories;
 	
-	/** var boolean Limit plugin to selected category */
-	protected $limit_to_category;
+	/** var boolean Limit plugin to selected categories */
+	protected $limit_to_categories;
 	
 	/** var boolean Include child categories */
 	protected $include_child_categories;
@@ -48,7 +48,12 @@ class plgContentEventlist extends JPlugin
 		
 		$this->plg_name = 'eventlist';
 		$this->eventfields = $this->setEventFields();
-	}
+	
+		// Get the plugin parameters
+		$this->categories	 = $this->params->get('plg_eventlist_categories');
+		$this->limit_to_categories = $this->params->get('plg_eventlist_limittocategories');
+		$this->include_child_categories = $this->params->get('plg_eventlist_includechildcategories');
+}
 	
 	/**
 	 * Set the values for the eventlist array
@@ -89,7 +94,7 @@ class plgContentEventlist extends JPlugin
 		if (!empty($data->catid))
 		{
 			$this->getChildCategories($data->catid);
-			if ($this->limit_to_category && !$this->checkCategory($data->catid))
+			if ($this->limit_to_categories && $this->categories && !$this->checkCategory($data->catid))
 			{
 				return true;
 			}
@@ -475,7 +480,7 @@ class plgContentEventlist extends JPlugin
 	 */
 	protected function checkCategory($article_cat)
 	{
-		if ($this->category == $article_cat)
+		if (in_array($article_cat, $this->categories))
 		{
 			return true;
 		}
@@ -485,9 +490,10 @@ class plgContentEventlist extends JPlugin
 		if ($this->include_child_categories)
 		{
 			$parents = $this->getParentCategories($article_cat);
-			if (in_array($this->category, $parents))
-			{
-				return true;
+			foreach ($this->categories as $currentcategory) {
+				if (in_array($currentcategory, $parents)) {
+					return true;
+				}
 			}
 		}
 		
@@ -504,8 +510,8 @@ class plgContentEventlist extends JPlugin
 	protected function getChildCategories($catId)
 	{
 		jimport('joomla.application.categories');
-		$categories = JCategories::getInstance('Content');
-		$cat		= $categories->get($catId);
+		$allcategories = JCategories::getInstance('Content');
+		$cat		= $allcategories->get($catId);
 		$children	= $cat->getChildren();
 		$childCats	= array();
 
@@ -529,8 +535,8 @@ class plgContentEventlist extends JPlugin
 		$parentCats	= array();
 
 		jimport('joomla.application.categories');
-		$categories = JCategories::getInstance('Content');
-		$cat		= $categories->get($catId);
+		$allcategories = JCategories::getInstance('Content');
+		$cat		= $allcategories->get($catId);
 
 		// Check the parent_id. If it is an integer > 0, update the array and 
 		// check for a parent_id of the parent... Only going up 2 levels...

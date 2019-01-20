@@ -6,9 +6,10 @@
 				name="eventlist_show"
 				type="radio"
 				required="true"
-				label="PLG_EVENTLIST_FIELD_SHOW"
+				label="PLG_CONTENT_EVENTLIST_PARAM_SHOW"
+				class="btn-group btn-group-yesno"
 				default="1"
-				description="PLG_EVENTLIST_FIELD_SHOW_DESC">
+				description="PLG_CONTENT_EVENTLIST_PARAM_SHOW_DESC">
 				<option value="1">JYES</option>
 				<option value="0">JNO</option>
 			</field>

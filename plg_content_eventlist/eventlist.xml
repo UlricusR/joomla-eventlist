@@ -9,7 +9,7 @@
 	<license>Code released under the [GNU GPL 3.0]
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
 	</license>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<description>PLG_CONTENT_EVENTLIST_DESC</description>
 	
 	<files>
@@ -24,30 +24,33 @@
 		<fields name="params">
 			<fieldset name="basic">
 				<field
-					name="plg_eventlist_limittocategory"
+					name="plg_eventlist_limittocategories"
 					type="radio"
 					class="btn-group btn-group-yesno"
 					default="0"
-					label="PLG_EVENTLIST_FIELD_LIMITTOCATEGORY"
-					description="PLG_EVENTLIST_FIELD_LIMITTOCATEGORY_DESC"
+					label="PLG_CONTENT_EVENTLIST_PARAM_LIMITTOCATEGORIES"
+					description="PLG_CONTENT_EVENTLIST_PARAM_LIMITTOCATEGORIES_DESC"
 					>
 						<option value="1">JYES</option>
 						<option value="0">JNO</option>
 				</field>
 				<field
-					name="plg_eventlist_category"
+					name="plg_eventlist_categories"
 					type="category"
 					extension="com_content"
-					label="PLG_EVENTLIST_FIELD_CATEGORY"
-					description="PLG_EVENTLIST_FIELD_CATEGORY_DESC"
+					multiple="true"
+					label="PLG_CONTENT_EVENTLIST_PARAM_CATEGORIES"
+					description="PLG_CONTENT_EVENTLIST_PARAM_CATEGORIES_DESC"
+					showon="plg_eventlist_limittocategories:1"
 				/>
 				<field
 					name="plg_eventlist_includechildcategories"
 					type="radio"
 					class="btn-group btn-group-yesno"
 					default="1"
-					label="PLG_EVENTLIST_FIELD_INCLUDECHILDCATEGORIES"
-					description="PLG_EVENTLIST_FIELD_INCLUDECHILDCATEGORIES_DESC"
+					label="PLG_CONTENT_EVENTLIST_PARAM_INCLUDECHILDCATEGORIES"
+					description="PLG_CONTENT_EVENTLIST_PARAM_INCLUDECHILDCATEGORIES_DESC"
+					showon="plg_eventlist_limittocategories:1"
 					>
 						<option value="1">JYES</option>
 						<option value="0">JNO</option>
@@ -57,28 +60,28 @@
 					type="list"
 					required="true"
 					default="H:i"
-					label="PLG_EVENTLIST_FIELD_TIMEFORMAT"
-					description="PLG_EVENTLIST_FIELD_TIMEFORMAT_DESC">
-					<option value="H:i">PLG_EVENTLIST_FIELD_TIMEFORMAT_24_LONG</option>
-					<option value="h:i A">PLG_EVENTLIST_FIELD_TIMEFORMAT_12_LONG</option>
-					<option value="G:i">PLG_EVENTLIST_FIELD_TIMEFORMAT_24_SHORT</option>
-					<option value="g:i A">PLG_EVENTLIST_FIELD_TIMEFORMAT_12_SHORT</option>
-					<option value="free">PLG_EVENTLIST_FIELD_TIMEFORMAT_FREE</option>
+					label="PLG_CONTENT_EVENTLIST_PARAM_TIMEFORMAT"
+					description="PLG_CONTENT_EVENTLIST_PARAM_TIMEFORMAT_DESC">
+					<option value="H:i">PLG_CONTENT_EVENTLIST_VALUE_TIMEFORMAT_24_LONG</option>
+					<option value="h:i A">PLG_CONTENT_EVENTLIST_VALUE_TIMEFORMAT_12_LONG</option>
+					<option value="G:i">PLG_CONTENT_EVENTLIST_VALUE_TIMEFORMAT_24_SHORT</option>
+					<option value="g:i A">PLG_CONTENT_EVENTLIST_VALUE_TIMEFORMAT_12_SHORT</option>
+					<option value="free">PLG_CONTENT_EVENTLIST_VALUE_TIMEFORMAT_FREE</option>
 				</field>
 				<field
 					name="plg_eventlist_timeformat_free"
 					type="text"
-					label="PLG_EVENTLIST_FIELD_FREE"
-					description="PLG_EVENTLIST_FIELD_FREE_DESC"
+					label="PLG_CONTENT_EVENTLIST_PARAM_FREE"
+					description="PLG_CONTENT_EVENTLIST_PARAM_FREE_DESC"
 					showon="plg_eventlist_timeformat:free"/>
 				<field
 					name="plg_eventlist_displaystyle"
 					type="list"
 					default="title"
-					label="PLG_EVENTLIST_FIELD_DISPLAYSTYLE"
-					description="PLG_EVENTLIST_FIELD_DISPLAYSTYLE_DESC">
-					<option value="plain">PLG_EVENTLIST_FIELD_DISPLAYSTYLE_PLAIN</option>
-					<option value="title">PLG_EVENTLIST_FIELD_DISPLAYSTYLE_TITLE</option>
+					label="PLG_CONTENT_EVENTLIST_PARAM_DISPLAYSTYLE"
+					description="PLG_CONTENT_EVENTLIST_PARAM_DISPLAYSTYLE_DESC">
+					<option value="plain">PLG_CONTENT_EVENTLIST_VALUE_DISPLAYSTYLE_PLAIN</option>
+					<option value="title">PLG_CONTENT_EVENTLIST_VALUE_DISPLAYSTYLE_TITLE</option>
 				</field>
 				<field
 					name="plg_eventlist_displaytitle"
@@ -86,8 +89,8 @@
 					default="Info"
 					hint="Info"
 					showon="plg_eventlist_displaystyle:title"
-					label="PLG_EVENTLIST_FIELD_DISPLAYTITLE"
-					description="PLG_EVENTLIST_FIELD_DISPLAYTITLE_DESC"/>
+					label="PLG_CONTENT_EVENTLIST_PARAM_DISPLAYTITLE"
+					description="PLG_CONTENT_EVENTLIST_PARAM_DISPLAYTITLE_DESC"/>
 			</fieldset>
 		</fields>
 	</config>

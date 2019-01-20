@@ -29,7 +29,7 @@ class JFormRuleTime extends JFormRule
     	}
     	
     	// Return error message
-    	$element->addAttribute('message', JText::_('PLG_EVENTLIST_ERR_TIMEFORMAT').JText::_($element->attributes()->label).'/'.$format.'/'.$value);
+    	$element->addAttribute('message', JText::_('PLG_CONTENT_EVENTLIST_ERR_TIMEFORMAT').JText::_($element->attributes()->label).'/'.$format.'/'.$value);
     	return false;
     }
 }
