@@ -24,6 +24,35 @@
 		<fields name="params">
 			<fieldset name="basic">
 				<field
+					name="plg_eventlist_limittocategory"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="PLG_EVENTLIST_FIELD_LIMITTOCATEGORY"
+					description="PLG_EVENTLIST_FIELD_LIMITTOCATEGORY_DESC"
+					>
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field
+					name="plg_eventlist_category"
+					type="category"
+					extension="com_content"
+					label="PLG_EVENTLIST_FIELD_CATEGORY"
+					description="PLG_EVENTLIST_FIELD_CATEGORY_DESC"
+				/>
+				<field
+					name="plg_eventlist_includechildcategories"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="PLG_EVENTLIST_FIELD_INCLUDECHILDCATEGORIES"
+					description="PLG_EVENTLIST_FIELD_INCLUDECHILDCATEGORIES_DESC"
+					>
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field
 					name="plg_eventlist_timeformat"
 					type="list"
 					required="true"
