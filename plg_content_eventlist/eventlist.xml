@@ -45,11 +45,20 @@
 				<field
 					name="plg_eventlist_displaystyle"
 					type="list"
-					default="border_title"
+					default="title"
 					label="PLG_EVENTLIST_FIELD_DISPLAYSTYLE"
 					description="PLG_EVENTLIST_FIELD_DISPLAYSTYLE_DESC">
 					<option value="plain">PLG_EVENTLIST_FIELD_DISPLAYSTYLE_PLAIN</option>
+					<option value="title">PLG_EVENTLIST_FIELD_DISPLAYSTYLE_TITLE</option>
 				</field>
+				<field
+					name="plg_eventlist_displaytitle"
+					type="text"
+					default="Info"
+					hint="Info"
+					showon="plg_eventlist_displaystyle:title"
+					label="PLG_EVENTLIST_FIELD_DISPLAYTITLE"
+					description="PLG_EVENTLIST_FIELD_DISPLAYTITLE_DESC"/>
 			</fieldset>
 		</fields>
 	</config>

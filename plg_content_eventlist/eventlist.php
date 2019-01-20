@@ -322,8 +322,17 @@ class plgContentEventlist extends JPlugin
 		    $weekdays[$value] = $text;
 		}
 		
+		// Get plg_contemt_eventlist parameters
+		$plugin = JPluginHelper::getPlugin('content', 'eventlist');
+		$pluginparams = new JRegistry($plugin->params);
+		
 		// Construct and populate a result table on the fly
-		$table = '<table><tbody>';
+		$table = '<table class="eventlist_infobox">';
+		if ($pluginparams['plg_eventlist_displaystyle'] == 'title')
+			$table .= '<thead><tr><th colspan="2">'.
+				$pluginparams['plg_eventlist_displaytitle'].
+				'</th></tr></thead>';
+		$table .= '<tbody>';
 		$rownr = 0;
 		foreach ($eventdata as $attr => $value) {
 			// Don't display the eventlist_show field
