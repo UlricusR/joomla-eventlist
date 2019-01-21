@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.8.0" client="site" method="upgrade">
-   <name>Event List</name>
-   <author>Ulrich Rueth</author>
+	<name>Event List</name>
+	<creationDate>19.01.2019</creationDate>
+	<version>1.2.0</version>
+	<author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
 	<authorUrl>https://rueth.info</authorUrl>
-	<creationDate>19.01.2019</creationDate>
 	<copyright>Copyright (C) 2018-2019 Ulrich Rueth</copyright>
 	<license>Code released under the [GNU GPL 3.0]
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
 	</license>
-	<version>1.2.0</version>
-   <description>MOD_EVENTLIST_DESC</description>
-
-	<updateservers>
-		<server type="extension" name="Event List" priority="1">https://rueth.info/eventlist_update.xml</server>
-	</updateservers>
-
-   <files>
-       <filename>mod_eventlist.xml</filename>
-       <filename module="mod_eventlist">mod_eventlist.php</filename>
-       <filename>index.html</filename>
-       <filename>helper.php</filename>
-       <folder>tmpl</folder>
-       <folder>css</folder>
-   </files>
-
-   <scriptfile>script.php</scriptfile>
-
-   <config>
+	<description>MOD_EVENTLIST_DESC</description>
+	
+	<files>
+		<filename>mod_eventlist.xml</filename>
+		<filename module="mod_eventlist">mod_eventlist.php</filename>
+		<filename>index.html</filename>
+		<filename>helper.php</filename>
+		<folder>tmpl</folder>
+		<folder>css</folder>
+	</files>
+	<scriptfile>script.php</scriptfile>
+	
+	<config>
 	   <fields name="params">
-	   		<fieldset name="basic">
+			<fieldset name="basic">
 				<field
 					name="eventlist_showdespitenotpublished"
 					type="radio"
@@ -51,7 +46,7 @@
 				<field
 					name="eventlist_template"
 					type="list"
-	   				required="true"
+					required="true"
 					label="MOD_EVENTLIST_FIELD_TEMPLATE"
 					default="international"
 					description="MOD_EVENTLIST_FIELD_TEMPLATE_DESC">
