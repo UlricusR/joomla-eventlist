@@ -9,7 +9,7 @@
 	<packager>Ulrich Rueth</packager>
 	<description>Combines the eventlist module and plugin</description>
 	<updateservers>
-		<server type="collection">https://rueth.info/eventlist_update.xml</server>
+		<server type="collection">https://rueth.info/pgk_eventlist_update.xml</server>
 	</updateservers>
 	<files folder="packages">
 		<file type="module" id="eventlist" client="site">mod_eventlist_1.2.0.zip</file>
