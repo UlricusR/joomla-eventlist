@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+	<update>
+		<name>EventList Module</name>
+		<description>This is the EventList Module v1.2.0</description>
+		<element>mod_eventlist</element>
+		<type>module</type>
+		<version>1.2.0</version>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/UlricusR/joomla-eventlist/releases/download/v1.3.1/mod_eventlist_1.2.0.zip</downloadurl>
+		</downloads>
+		<maintainer>Ulrich Rueth</maintainer>
+		<maintainerurl>https://rueth.info/index.php/de/eventlist-de</maintainerurl>
+		<targetplatform name="joomla" version="3.[0123456789]"/>
+		<client>site</client>
+	</update>
+</updates>

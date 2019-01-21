@@ -93,7 +93,7 @@ class plgContentEventlist extends JPlugin
 		// If the category id is set, then check if the plugin should be limited to a specific category
 		if (!empty($data->catid))
 		{
-			$this->getChildCategories($data->catid);
+			//$this->getChildCategories($data->catid);
 			if ($this->limit_to_categories && $this->categories && !$this->checkCategory($data->catid))
 			{
 				return true;

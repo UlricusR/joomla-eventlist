@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
- <extension type="package" version="3.9" method="upgrade">
- 	<name>Event List Package</name>
- 	<author>Ulrich Rueth</author>
- 	<creationDate>20.01.2019</creationDate>
- 	<packagename>eventlist</packagename>
- 	<version>1.3.0</version>
- 	<url>https://rueth.info</url>
- 	<packager>Ulrich Rueth</packager>
- 	<description>Combines the eventlist module and plugin</description>
- 	<update>https://rueth.info/eventlist_update.xml</update>
- 	<files folder="packages">
-   		<file type="module" id="eventlist" client="site">mod_eventlist_1.2.0.zip</file>
-   		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.0.zip</file>
- 	</files>
- </extension>
+<extension type="package" version="3.9" method="upgrade">
+	<name>Event List Package</name>
+	<author>Ulrich Rueth</author>
+	<creationDate>21.01.2019</creationDate>
+	<packagename>eventlist</packagename>
+	<version>1.3.1</version>
+	<url>https://rueth.info</url>
+	<packager>Ulrich Rueth</packager>
+	<description>Combines the eventlist module and plugin</description>
+	<updateservers>
+		<server type="collection">https://rueth.info/eventlist_update.xml</server>
+	</updateservers>
+	<files folder="packages">
+		<file type="module" id="eventlist" client="site">mod_eventlist_1.2.0.zip</file>
+		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.1.zip</file>
+	</files>
+</extension>
