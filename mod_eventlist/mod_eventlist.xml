@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.8.0" client="site" method="upgrade">
-	<name>Event List</name>
+	<name>MOD_EVENTLIST</name>
 	<creationDate>19.01.2019</creationDate>
 	<version>1.2.0</version>
 	<author>Ulrich Rueth</author>
