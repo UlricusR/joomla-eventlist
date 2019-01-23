@@ -56,10 +56,7 @@ class mod_eventListInstallerScript
 			$application = JFactory::getApplication();
 
 			// Add a message to the message queue
-			$application->enqueueMessage(JText::_('ERR_PLUGIN_NOT_FOUND'), 'error');
-			
-			// Stop installation
-			return false;
+			$application->enqueueMessage(JText::_('ERR_PLUGIN_NOT_FOUND'), 'warning');
 		}
 	}
 
