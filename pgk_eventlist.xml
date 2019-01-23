@@ -13,7 +13,7 @@
 		<server type="collection">https://rueth.info/pgk_eventlist_update.xml</server>
 	</updateservers>
 	<files folder="packages">
-		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.1.zip</file>
+		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.2.zip</file>
 		<file type="module" id="eventlist" client="site">mod_eventlist_1.3.0.zip</file>
 	</files>
 </extension>

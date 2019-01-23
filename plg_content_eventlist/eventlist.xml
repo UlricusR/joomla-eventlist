@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension version="3.9" type="plugin" group="content" method="upgrade">
 	<name>PLG_CONTENT_EVENTLIST</name>
-	<creationDate>21.01.2019</creationDate>
-	<version>1.2.1</version>
+	<creationDate>23.01.2019</creationDate>
+	<version>1.2.2</version>
 	<author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
 	<authorUrl>https://rueth.info</authorUrl>
