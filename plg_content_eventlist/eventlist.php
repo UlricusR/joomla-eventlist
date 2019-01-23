@@ -292,9 +292,13 @@ class plgContentEventlist extends JPlugin
 		{
 			if (!empty(trim($attribs->$eventfield))) $eventdata[$eventfield] = $attribs->$eventfield;
 		}
-
+		
+		// Check if there are more than eventdata_show
 		if (!count($eventdata))
 		{
+			return;
+		}
+		if (count($eventdata) == 1 && array_key_exists('eventlist_show', $eventdata)) {
 			return;
 		}
 
