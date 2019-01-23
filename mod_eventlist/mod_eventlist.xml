@@ -44,6 +44,15 @@
 					description="MOD_EVENTLIST_FIELD_CATEGORIES_DESC"
 					multiple="true"/>
 				<field
+					name="eventlist_weekstarts"
+					type="list"
+					label="MOD_EVENTLIST_FIELD_WEEKSTARTS"
+					description="MOD_EVENTLIST_FIELD_WEEKSTARTS_DESC"
+					default="0">
+					<option value="0">MOD_EVENTLIST_FIELD_WEEKSTARTS_SUNDAY</option>
+					<option value="1">MOD_EVENTLIST_FIELD_WEEKSTARTS_MONDAY</option>
+				</field>
+				<field
 					name="eventlist_template"
 					type="list"
 					required="true"

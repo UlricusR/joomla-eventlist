@@ -38,7 +38,7 @@ class ModEventListHelper
 		$db->setQuery($query);
 		$articles = $db->loadAssocList();
 		
-		// Create an array with seven empty arrays, one for each day of the week TODO Configure startday
+		// Create an array with seven empty arrays, one for each day of the week
 		$days = array_fill(0, 7, array());
 		
 		// Fill the days array with all relevant articles
