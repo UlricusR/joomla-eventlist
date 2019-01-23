@@ -50,7 +50,17 @@ class mod_eventListInstallerScript
 	 */
 	function preflight($type, $parent) 
 	{
-		echo '<p>Anything here happens before the installation/update/uninstallation of the module</p>';
+		//echo '<p>Anything here happens before the installation/update/uninstallation of the module</p>';
+		if (!JPluginHelper::getPlugin('content', 'eventlist')) {
+			// Get a handle to the Joomla! application object
+			$application = JFactory::getApplication();
+
+			// Add a message to the message queue
+			$application->enqueueMessage(JText::_('ERR_PLUGIN_NOT_FOUND'), 'error');
+			
+			// Stop installation
+			return false;
+		}
 	}
 
 	/**
@@ -62,6 +72,6 @@ class mod_eventListInstallerScript
 	 */
 	function postflight($type, $parent) 
 	{
-		echo '<p>Anything here happens after the installation/update/uninstallation of the module</p>';
+		//echo '<p>Anything here happens after the installation/update/uninstallation of the module</p>';
 	}
 }

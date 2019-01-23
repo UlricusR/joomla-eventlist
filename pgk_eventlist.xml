@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <extension type="package" version="3.9" method="upgrade">
 	<name>Event List Package</name>
-	<creationDate>21.01.2019</creationDate>
-	<version>1.3.1</version>
+	<creationDate>23.01.2019</creationDate>
+	<version>1.4.0</version>
 	<author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
 	<packagename>eventlist</packagename>
@@ -14,6 +14,6 @@
 	</updateservers>
 	<files folder="packages">
 		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.1.zip</file>
-		<file type="module" id="eventlist" client="site">mod_eventlist_1.2.0.zip</file>
+		<file type="module" id="eventlist" client="site">mod_eventlist_1.3.0.zip</file>
 	</files>
 </extension>
