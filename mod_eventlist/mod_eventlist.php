@@ -3,8 +3,8 @@
  * @package     Joomla.Site
  * @subpackage  mod_eventlist
  *
- * @copyright   Copyright (C) 2018 Ulrich Rueth, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2018-2019 Ulrich Rueth, Inc. All rights reserved.
+ * @license     GNU General Public License version 3 or later
  */
 
 // No direct access

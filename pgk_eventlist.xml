@@ -5,6 +5,9 @@
 	<version>1.4.0</version>
 	<author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
+	<license>Code released under the [GNU GPL 3.0]
+		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
+	</license>
 	<packagename>eventlist</packagename>
 	<url>https://rueth.info</url>
 	<packager>Ulrich Rueth</packager>
@@ -12,6 +15,7 @@
 	<updateservers>
 		<server type="collection">https://rueth.info/pgk_eventlist_update.xml</server>
 	</updateservers>
+	<blockChildUninstall>1</blockChildUninstall>
 	<files folder="packages">
 		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.2.zip</file>
 		<file type="module" id="eventlist" client="site">mod_eventlist_1.3.0.zip</file>

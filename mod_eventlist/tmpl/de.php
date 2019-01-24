@@ -1,4 +1,12 @@
 <?php 
+/**
+ * @package     Joomla.Site
+ * @subpackage  mod_eventlist
+ *
+ * @copyright   Copyright (C) 2018-2019 Ulrich Rueth, Inc. All rights reserved.
+ * @license     GNU General Public License version 3 or later
+ */
+ 
 // No direct access
 defined('_JEXEC') or die;
 

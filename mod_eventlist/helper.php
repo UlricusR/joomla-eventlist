@@ -3,8 +3,8 @@
  * @package     Joomla.Site
  * @subpackage  mod_eventlist
  *
- * @copyright   Copyright (C) 2018 Ulrich Rueth, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2018-2019 Ulrich Rueth, Inc. All rights reserved.
+ * @license     GNU General Public License version 3 or later
  */
  
 defined('_JEXEC') or die;
@@ -34,7 +34,7 @@ class ModEventListHelper
 		$query = $db->getQuery(true)
 			->select($db->quoteName(array('article_id', 'data')))
 			->from($db->quoteName('#__content_eventlist'))
-			->where("`data` IS NOT NULL");
+			->where($db->quoteName('data').' IS NOT NULL');
 		$db->setQuery($query);
 		$articles = $db->loadAssocList();
 		

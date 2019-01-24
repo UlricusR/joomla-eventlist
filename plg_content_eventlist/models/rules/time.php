@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Copyright 2018 Ulrich Rueth. All Rights Reserved.
- * @license    GNU General Public License version 3 or later;
+ * @copyright Copyright 2018-2019 Ulrich Rueth. All Rights Reserved.
+ * @license    GNU General Public License version 3 or later
  */
 
 defined('_JEXEC') or die;
