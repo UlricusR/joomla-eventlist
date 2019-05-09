@@ -18,22 +18,22 @@ class plgContentEventlist extends JPlugin
 	 * @var    boolean
 	 */
 	protected $autoloadLanguage = true;
-	
+
 	/** var string Name of the plugin */
 	protected $plg_name;
-	
+
 	/** var array List of fields to look for in the $attribs */
 	protected $eventfields;
-	
+
 	/** var string Categories */
 	protected $categories;
-	
+
 	/** var boolean Limit plugin to selected categories */
 	protected $limit_to_categories;
-	
+
 	/** var boolean Include child categories */
 	protected $include_child_categories;
-	
+
 	public function __construct(& $subject, $config)
 	{
 		// We only want to use this with com_content
@@ -43,18 +43,18 @@ class plgContentEventlist extends JPlugin
 		{
 			return true;
 		}
-		
+
 		parent::__construct($subject, $config);
-		
+
 		$this->plg_name = 'eventlist';
 		$this->eventfields = $this->setEventFields();
-	
+
 		// Get the plugin parameters
 		$this->categories	 = $this->params->get('plg_eventlist_categories');
 		$this->limit_to_categories = $this->params->get('plg_eventlist_limittocategories');
 		$this->include_child_categories = $this->params->get('plg_eventlist_includechildcategories');
 }
-	
+
 	/**
 	 * Set the values for the eventlist array
 	 * These should correspond to the fields in extras/eventparams.xml
@@ -76,10 +76,10 @@ class plgContentEventlist extends JPlugin
 			'eventlist_endtime',
 			'eventlist_comment',
 		);
-		
+
 		return $eventfields;
 	}
-	
+
 	/**
 	 * Prepare the form to add to the article edit
 	 *
@@ -99,16 +99,16 @@ class plgContentEventlist extends JPlugin
 				return true;
 			}
 		}
-		
+
 		if (!($form instanceof JForm))
 		{
 			$this->_subject->setError('JERROR_NOT_A_FORM');
 			return false;
 		}
-		
+
 		// Check that we are manipulating a valid form
 		$name = $form->getName();
-		
+
 		if (!in_array($name, array('com_content.article')))
 		{
 			return true;
@@ -135,33 +135,31 @@ class plgContentEventlist extends JPlugin
 		if (is_object($data))
 		{
 			$articleId = isset($data->id) ? $data->id : 0;
-			
+
 			if ($articleId > 0)
 			{
-				// Load the data from the database
-				$db = JFactory::getDbo();
-				$query = $db->getQuery(true);
-				$query->select('data');
-				$query->from('#__content_eventlist');
-				$query->where('article_id = '.$db->Quote($articleId));
-				$db->setQuery($query);
-				$results = $db->loadAssoc();
+				try {
+					// Load the data from the database
+					$db = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query->select('data');
+					$query->from('#__content_eventlist');
+					$query->where('article_id = '.$db->Quote($articleId));
+					$db->setQuery($query);
+					$results = $db->loadAssoc();
 
-				// Check for a database error
-				if ($db->getErrorNum())
-				{
-					$this->_subject->setError($db->getErrorMsg());
+					$eventdata = ($results && count($results) == 1) ? json_decode(json_decode($results['data'])) : new stdClass();
+
+					// Merge the data
+					$data->attribs = array();
+
+					foreach ($this->eventfields as $eventfield)
+					{
+						$data->attribs[$eventfield] = isset($eventdata->$eventfield) ? $eventdata->$eventfield : '';
+					}
+				} catch (Exception $e) {
+					$this->_subject->setError($e->getMessage());
 					return false;
-				}
-				
-				$eventdata = ($results && count($results) == 1) ? json_decode(json_decode($results['data'])) : new stdClass();
-
-				// Merge the data
-				$data->attribs = array();
-
-				foreach ($this->eventfields as $eventfield)
-				{
-					$data->attribs[$eventfield] = isset($eventdata->$eventfield) ? $eventdata->$eventfield : '';
 				}
 			}
 			else
@@ -179,10 +177,10 @@ class plgContentEventlist extends JPlugin
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Fires after content save post event hook to save custom data into #__content_eventlist
 	 *
@@ -199,13 +197,13 @@ class plgContentEventlist extends JPlugin
 		{
 			return true;
 		}
-		
+
 		// Get the article id or set to 0 if new article (it should have an id at this point)
 		$articleId = isset($data->id) ? $data->id : 0;
 
 		// Get the attributes
 		$attribs = json_decode($data->attribs);
-		
+
 		// Pull out the extra fields to insert into the table
 		$eventattribs = array();
 		foreach ($this->eventfields as $eventfield)
@@ -216,11 +214,11 @@ class plgContentEventlist extends JPlugin
 
 		// Get the database object
 		$db = JFactory::getDbo();
-		
+
 		// Check for an existing entry
 		$db->setQuery('SELECT COUNT(*) FROM #__content_eventlist WHERE article_id = '.$articleId);
 		$res = $db->loadResult();
-		
+
 		// Updating or adding
 		if (!empty($res)) // updating record
 		{
@@ -231,7 +229,7 @@ class plgContentEventlist extends JPlugin
 			$this->insertRecord($eventattribs, $articleId);
 		}
 	}
-	
+
 	/**
 	* Remove the data when the article is deleted
 	*
@@ -247,15 +245,15 @@ class plgContentEventlist extends JPlugin
 	{
 		 // get the article id
 		$articleId = isset($data->id) ? (int) $data->id : 0;
-		
+
 		if ($articleId)
 		{
 			try
 			{
 				$db = JFactory::getDbo();
-				
+
 				$db->setQuery('DELETE FROM #__content_eventlist WHERE article_id = '.$articleId );
-				
+
 				if (!$db->execute()) {
 					throw new Exception($db->getErrorMsg());
 				}
@@ -263,14 +261,14 @@ class plgContentEventlist extends JPlugin
 			catch (JException $e)
 			{
 				$this->_subject->setError($e->getMessage());
-				
+
 				return false;
 			}
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * The first stage in preparing the content for output
 	 *
@@ -285,14 +283,14 @@ class plgContentEventlist extends JPlugin
 	{
 		// Get article attribs
 		$attribs = json_decode($article->attribs);
-		
+
 		// Extract the eventdata attribs
 		$eventdata = array();
 		foreach ($this->eventfields as $eventfield)
 		{
 			if (!empty(trim($attribs->$eventfield))) $eventdata[$eventfield] = $attribs->$eventfield;
 		}
-		
+
 		// Check if there are more than eventdata_show
 		if (!count($eventdata))
 		{
@@ -313,11 +311,11 @@ class plgContentEventlist extends JPlugin
 		$fieldSet = $form->getFieldset('eventinfo');
 		//$form = JForm::getInstance('eventparams', dirname(__FILE__) . '/extras/eventparams.xml');
 		//$fieldSet = $form->getFieldSet('eventinfo');
-		
-		// Get xml and check if it's valid		
+
+		// Get xml and check if it's valid
 		$xml = $form->getXml();
 		if (!($xml instanceof \SimpleXMLElement)) return;
-		
+
 		// Get weekday options
 		#$group = 'attribs';
 		$fieldName = 'eventlist_weekday';
@@ -330,11 +328,11 @@ class plgContentEventlist extends JPlugin
 		    $text  = trim((string) $option) != '' ? trim((string) $option) : $value;
 		    $weekdays[$value] = $text;
 		}
-		
+
 		// Get plg_contemt_eventlist parameters
 		$plugin = JPluginHelper::getPlugin('content', 'eventlist');
 		$pluginparams = new JRegistry($plugin->params);
-		
+
 		// Construct and populate a result table on the fly
 		$table = '<table class="eventlist_infobox">';
 		if ($pluginparams['plg_eventlist_displaystyle'] == 'title')
@@ -345,11 +343,11 @@ class plgContentEventlist extends JPlugin
 		$rownr = 0;
 		foreach ($eventdata as $attr => $value) {
 			// Don't display the eventlist_show field
-			if ($attr == 'eventlist_show') continue;		
-			
+			if ($attr == 'eventlist_show') continue;
+
 			// Initiate new table row
 			$table .= '<tr class="row'.($rownr % 2).'">';
-			
+
 			// Get the field's local label and the local weekday string
 			$label = "";
 			foreach ($fieldSet as $field) {
@@ -361,12 +359,12 @@ class plgContentEventlist extends JPlugin
 					}
 					break;
 				}
-			}			
-			
+			}
+
 			// Populate table row
 			$table .= '<td class="eventinfo_label">'.$label.'</td>';
 			$table .= '<td class="eventinfo_value">'.$value.'</td>';
-			
+
 			// Close table row and increase row number
 			$table .= '</tr>';
 			$rownr++;
@@ -442,10 +440,10 @@ class plgContentEventlist extends JPlugin
 	protected function updateRecord($attribs, $articleId)
 	{
 		$db = JFactory::getDbo();
-		
+
 		// Create a new query object.
 		$query = $db->getQuery(true);
-		
+
 		$conditions = array(
 			'article_id='.$articleId,
 		);
@@ -474,12 +472,12 @@ class plgContentEventlist extends JPlugin
 
 		return true;
 	}
-	
+
 	/**
 	 * Check the article category against the category selected by the plugin
 	 *
 	 * @param integer	$article_cat		The category of the article
-	 * 
+	 *
 	 * @return boolean
 	 */
 	protected function checkCategory($article_cat)
@@ -488,8 +486,8 @@ class plgContentEventlist extends JPlugin
 		{
 			return true;
 		}
-		
-		// Need to check if the current category's parent or grand-parent 
+
+		// Need to check if the current category's parent or grand-parent
 		// is the category selected for this plugin
 		if ($this->include_child_categories)
 		{
@@ -500,10 +498,10 @@ class plgContentEventlist extends JPlugin
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Get a list of the category children
 	 *
@@ -542,7 +540,7 @@ class plgContentEventlist extends JPlugin
 		$allcategories = JCategories::getInstance('Content');
 		$cat		= $allcategories->get($catId);
 
-		// Check the parent_id. If it is an integer > 0, update the array and 
+		// Check the parent_id. If it is an integer > 0, update the array and
 		// check for a parent_id of the parent... Only going up 2 levels...
 		if ((int)$cat->parent_id)
 		{
