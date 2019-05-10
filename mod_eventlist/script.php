@@ -6,6 +6,8 @@
  * @copyright   Copyright (C) 2018-2019 Ulrich Rueth, Inc. All rights reserved.
  * @license     GNU General Public License version 3 or later
  */
+
+namespace \RuethInfo\Module\EventList\Site;
  
 // No direct access to this file
 defined('_JEXEC') or die;
@@ -46,7 +48,7 @@ class mod_eventListInstallerScript
 	 */
 	function update($parent) 
 	{
-		echo '<p>The module has been updated to version ' . $parent->get('manifest')->version . '</p>';
+		echo '<p>The module has been updated to version ' . $parent->manifest->version . '</p>';
 	}
 
 	/**

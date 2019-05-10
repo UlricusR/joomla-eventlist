@@ -1,4 +1,6 @@
 <?php
+namespace \RuethInfo\Module\EventList\Site;
+ 
 /**
  * @package     Joomla.Site
  * @subpackage  mod_eventlist
@@ -9,8 +11,15 @@
  
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Factory\MVCFactory;
+
 class ModEventListHelper
 {
+    /**
+     * The extension namespace
+     */
+    protected $namespace = '\\RuethInfo\\Module\\EventList\\Site';
+    
 	/**
 	 * Get a list of the articles of a certain day sorted by starting time,
 	 * articles w/o starting time first.
@@ -102,12 +111,13 @@ class ModEventListHelper
 			$dayCounter++;
 			if(!empty($sortedDay)) {
 				$articleIds = array_column($sortedDay, 'article_id');
+				$app       = JFactory::getApplication();
 						
 				// Get an instance of the generic articles model
-				$model = JModelLegacy::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
+				$modelFactory = new MVCFactory($namespace, $app);
+				$model = $modelFactory->createModel('Articles', 'ContentModel', array('ignore_request' => true)); var_dump($model); return;
 		
 				// Set application parameters in model
-				$app       = JFactory::getApplication();
 				$appParams = $app->getParams();
 				$model->setState('params', $appParams);
 		

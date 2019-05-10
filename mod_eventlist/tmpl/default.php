@@ -10,7 +10,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-if(array_filter($eventList)) {
+if($eventList <> null && array_filter($eventList)) {
 	
 	// Load language file, set default language to en-GB
 	$language =& JFactory::getLanguage();
