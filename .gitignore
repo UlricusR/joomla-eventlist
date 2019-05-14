@@ -8,3 +8,5 @@ plg_content_eventlist/.DS_Store
 .DS_Store
 .metadata
 .project
+.buildpath
+.settings/org.eclipse.php.core.prefs
