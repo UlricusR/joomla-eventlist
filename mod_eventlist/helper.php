@@ -107,10 +107,6 @@ class ModEventListHelper
 				$app       = Factory::getApplication();
 
 				// Get an instance of the generic articles model
-				//BaseDatabaseModel::addIncludePath('components/com_content/models', 'ContentModel');
-				//$model = BaseDatabaseModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
-				//$modelFactory = new MVCFactory($namespace, $app);
-				//$model = $modelFactory->createModel('Articles', 'ContentModel', array('ignore_request' => true));
 				$model = $app->bootComponent('com_content')->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
 
 				// Set application parameters in model
