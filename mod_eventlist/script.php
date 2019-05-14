@@ -7,8 +7,6 @@
  * @license     GNU General Public License version 3 or later
  */
 
-namespace \RuethInfo\Module\EventList\Site;
- 
 // No direct access to this file
 defined('_JEXEC') or die;
 
