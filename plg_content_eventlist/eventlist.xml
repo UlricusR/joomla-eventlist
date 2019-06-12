@@ -2,7 +2,7 @@
 <extension version="4.0" type="plugin" group="content" method="upgrade">
 	<name>Content - EventList</name>
 	<creationDate>23.01.2019</creationDate>
-	<version>2.0.0</version>
+	<version>1.2.2</version>
 	<author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
 	<authorUrl>https://rueth.info</authorUrl>

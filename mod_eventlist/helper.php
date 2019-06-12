@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  mod_eventlist
  *
- * @copyright   Copyright (C) 2018-2019 Ulrich Rueth, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2018-2019 Ulrich Rueth. All rights reserved.
  * @license     GNU General Public License version 3 or later
  */
 
@@ -107,7 +107,7 @@ class ModEventListHelper
 				$app       = Factory::getApplication();
 
 				// Get an instance of the generic articles model
-				$model = $app->bootComponent('com_content')->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
+				$model = JModelLegacy::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
 
 				// Set application parameters in model
 				$appParams = $app->getParams();
@@ -116,7 +116,7 @@ class ModEventListHelper
 				// Set the filters based on the module params
 				$model->setState('filter.published', 1);
 				$model->setState('filter.article_id', $articleIds);
-				$model->setState('filter.category_id', $params['eventlist_categories']);
+				$model->setState('filter.category_id', $params->get('eventlist_categories', array()));
 
 				// This module does not use tags data
 				$model->setState('load_tags', false);
@@ -130,7 +130,7 @@ class ModEventListHelper
 				$itemsToPublish = $model->getItems();
 
 				// Get non-published items if requested
-				if ($params['eventlist_showdespitenotpublished']) {
+				if ($params->get('eventlist_showdespitenotpublished', false)) {
 					$model->setState('filter.published', 0);
 					$itemsToPublish = array_merge($itemsToPublish, $model->getItems());
 				}
