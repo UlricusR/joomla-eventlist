@@ -2,12 +2,12 @@
 <updates>
 	<update>
 		<name>EventList Module</name>
-		<description>This is the EventList Module v1.3.1</description>
+		<description>This is the EventList Module v1.3.2</description>
 		<element>mod_eventlist</element>
 		<type>module</type>
-		<version>1.3.1</version>
+		<version>1.3.2</version>
 		<downloads>
-			<downloadurl type="full" format="zip">https://github.com/UlricusR/joomla-eventlist/releases/download/v1.4.1/mod_eventlist_1.3.1.zip</downloadurl>
+			<downloadurl type="full" format="zip">https://github.com/UlricusR/joomla-eventlist/releases/download/v1.4.2/mod_eventlist_1.3.2.zip</downloadurl>
 		</downloads>
 		<maintainer>Ulrich Rueth</maintainer>
 		<maintainerurl>https://rueth.info/index.php/de/eventlist-de</maintainerurl>

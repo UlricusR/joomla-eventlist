@@ -14,10 +14,6 @@ defined('_JEXEC') or die;
 JLoader::register('ModEventlistHelper', __DIR__ . '/helper.php');
 include __DIR__ . '/helper.php';
 
-// Get mod_eventlist parameters
-$module = JModuleHelper::getModule('mod_eventlist');
-$params = new JRegistry($module->params);
-
 $eventList = ModEventListHelper::getList($params);
 	
 require JModuleHelper::getLayoutPath('mod_eventlist', $params['eventlist_template']);
