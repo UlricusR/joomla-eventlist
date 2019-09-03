@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extensionset name="EventList Package" description="The EventList set of extensions">
-	<extension name="EventList Plugin" element="plg_content_eventlist" type="plugin" version="1.2.2" detailsurl="https://rueth.info/plg_content_eventlist_update.xml"/>
-	<extension name="EventList Module" element="mod_eventlist" type="module" version="1.3.0" detailsurl="https://rueth.info/mod_eventlist_update.xml"/>
+	<extension name="EventList Plugin" element="plg_content_eventlist" type="plugin" version="2.0.0" detailsurl="https://rueth.info/plg_content_eventlist_update.xml"/>
+	<extension name="EventList Module" element="mod_eventlist" type="module" version="2.0.0" detailsurl="https://rueth.info/mod_eventlist_update.xml"/>
 </extensionset>

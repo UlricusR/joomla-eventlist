@@ -2,7 +2,7 @@
 <extension type="package" version="3.9" method="upgrade">
 	<name>Event List Package</name>
 	<creationDate>23.01.2019</creationDate>
-	<version>1.4.1</version>
+	<version>2.0.0</version>
 	<author>Ulrich Rueth</author>
 	<authorEmail>code@rueth.info</authorEmail>
 	<license>Code released under the [GNU GPL 3.0]
@@ -17,7 +17,7 @@
 	</updateservers>
 	<blockChildUninstall>1</blockChildUninstall>
 	<files folder="packages">
-		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_1.2.2.zip</file>
-		<file type="module" id="eventlist" client="site">mod_eventlist_1.3.1.zip</file>
+		<file type="plugin" id="eventlist" group="site">plg_content_eventlist_2.0.0.zip</file>
+		<file type="module" id="eventlist" client="site">mod_eventlist_2.0.0.zip</file>
 	</files>
 </extension>
