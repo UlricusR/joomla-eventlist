@@ -6,19 +6,26 @@
 
 defined('_JEXEC') or die;
 
+// Imports
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Form\FormRule;
+use Joomla\CMS\HTML\Registry;
+
 /**
  * This is a rule to verify the time format of the input form
  */
-class JFormRuleTime extends JFormRule
+class JFormRuleTime extends FormRule
 {
-	public function test(SimpleXMLElement $element, $value, $group = null, JRegistry $input = null, JForm $form = null) {
+	public function test(SimpleXMLElement $element, $value, $group = null, Registry $input = null, Form $form = null) {
 		
 		// If no value then no validation
 		if ($value == '') return true;
 		
 		// Get plg_contemt_eventlist parameters
-		$plugin = JPluginHelper::getPlugin('content', 'eventlist');
-		$params = new JRegistry($plugin->params);
+		$plugin = PluginHelper::getPlugin('content', 'eventlist');
+		$params = new Registry($plugin->params);
 		$format = $params['plg_eventlist_timeformat'];
 		if ($format == 'free') $format = $params['plg_eventlist_timeformat_free'];
 	
@@ -29,7 +36,7 @@ class JFormRuleTime extends JFormRule
     	}
     	
     	// Return error message
-    	$element->addAttribute('message', JText::_('PLG_CONTENT_EVENTLIST_ERR_TIMEFORMAT').JText::_($element->attributes()->label).'/'.$format.'/'.$value);
+    	$element->addAttribute('message', Text::_('PLG_CONTENT_EVENTLIST_ERR_TIMEFORMAT').Text::_($element->attributes()->label).'/'.$format.'/'.$value);
     	return false;
     }
 }

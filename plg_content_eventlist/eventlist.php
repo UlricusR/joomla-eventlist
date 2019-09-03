@@ -7,10 +7,20 @@
 defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 
+// Imports
+use Joomla\CMS\Factory;
+use Joomla\CMS\Categories\Categories;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Form\Field\PluginsField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\HTML\Registry;
+
 /**
  * This is a custom plugin class to add additional fields to com_content to allow it to be used for capturing recurring events
  */
-class plgContentEventlist extends JPlugin
+class plgContentEventlist extends PluginsField
 {
 	/**
 	 * Load the language file on instantiation.
@@ -37,7 +47,7 @@ class plgContentEventlist extends JPlugin
 	public function __construct(& $subject, $config)
 	{
 		// We only want to use this with com_content
-		$jinput = JFactory::getApplication()->input;
+		$jinput = Factory::getApplication()->input;
 		$option = $jinput->get('option');
 		if ($option <> 'com_content')
 		{
@@ -100,7 +110,7 @@ class plgContentEventlist extends JPlugin
 			}
 		}
 
-		if (!($form instanceof JForm))
+		if (!($form instanceof Form))
 		{
 			$this->_subject->setError('JERROR_NOT_A_FORM');
 			return false;
@@ -115,7 +125,7 @@ class plgContentEventlist extends JPlugin
 		}
 
 		// Add the extra fields to the form
-		JForm::addFormPath(dirname(__FILE__) . '/extras');
+		Form::addFormPath(dirname(__FILE__) . '/extras');
 		$form->loadFile('eventparams', false);
 
 		return true;
@@ -140,7 +150,7 @@ class plgContentEventlist extends JPlugin
 			{
 				try {
 					// Load the data from the database
-					$db = JFactory::getDbo();
+					$db = Factory::getDbo();
 					$query = $db->getQuery(true);
 					$query->select('data');
 					$query->from('#__content_eventlist');
@@ -165,8 +175,8 @@ class plgContentEventlist extends JPlugin
 			else
 			{
 				// Load the form
-				JForm::addFormPath(dirname(__FILE__).'/extras');
-				$form = new JForm('com_content.article');
+				Form::addFormPath(dirname(__FILE__).'/extras');
+				$form = new Form('com_content.article');
 				$form->loadFile('eventparams', false);
 
 				// Merge the default values
@@ -213,7 +223,7 @@ class plgContentEventlist extends JPlugin
 		$eventattribs = json_encode($eventattribs);
 
 		// Get the database object
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Check for an existing entry
 		$db->setQuery('SELECT COUNT(*) FROM #__content_eventlist WHERE article_id = '.$articleId);
@@ -239,7 +249,7 @@ class plgContentEventlist extends JPlugin
 	* @param object The data relating to the content that was deleted.
 	*
 	* @return bool
-	* @throws JException
+	* @throws Exception
 	*/
 	public function onContentAfterDelete($context, $data)
 	{
@@ -250,7 +260,7 @@ class plgContentEventlist extends JPlugin
 		{
 			try
 			{
-				$db = JFactory::getDbo();
+				$db = Factory::getDbo();
 
 				$db->setQuery('DELETE FROM #__content_eventlist WHERE article_id = '.$articleId );
 
@@ -258,7 +268,7 @@ class plgContentEventlist extends JPlugin
 					throw new Exception($db->getErrorMsg());
 				}
 			}
-			catch (JException $e)
+			catch (Exception $e)
 			{
 				$this->_subject->setError($e->getMessage());
 
@@ -301,12 +311,12 @@ class plgContentEventlist extends JPlugin
 		}
 
 		// Add CSS for table
-		$doc = JFactory::getDocument();
-		$doc->addStyleSheet(JURI::base(true).'/plugins/content/eventlist/extras/eventinfo.css');
+		$doc = Factory::getDocument();
+		$doc->addStyleSheet(Uri::base(true).'/plugins/content/eventlist/extras/eventinfo.css');
 
 		// Load form & fieldset
 		$file = __DIR__ . '/extras/eventparams.xml';
-		$form = new JForm('eventparams');
+		$form = new Form('eventparams');
 		$form->loadFile($file);
 		$fieldSet = $form->getFieldset('eventinfo');
 		//$form = JForm::getInstance('eventparams', dirname(__FILE__) . '/extras/eventparams.xml');
@@ -330,8 +340,8 @@ class plgContentEventlist extends JPlugin
 		}
 
 		// Get plg_contemt_eventlist parameters
-		$plugin = JPluginHelper::getPlugin('content', 'eventlist');
-		$pluginparams = new JRegistry($plugin->params);
+		$plugin = PluginHelper::getPlugin('content', 'eventlist');
+		$pluginparams = new Registry($plugin->params);
 
 		// Construct and populate a result table on the fly
 		$table = '<table class="eventlist_infobox">';
@@ -353,9 +363,9 @@ class plgContentEventlist extends JPlugin
 			foreach ($fieldSet as $field) {
 				$fieldName = $field->getAttribute('name');
 				if ($fieldName == $attr) {
-					$label = JText::_($field->getAttribute('label'));
+					$label = Text::_($field->getAttribute('label'));
 					if ($fieldName == 'eventlist_weekday') {
-						$value = JText::_($weekdays[(int)$value]);
+						$value = Text::_($weekdays[(int)$value]);
 					}
 					break;
 				}
@@ -381,8 +391,8 @@ class plgContentEventlist extends JPlugin
 	 /**
 	* Insert a new record into the database
 	*
-	* @param $attribs our extra fields in object form
-	* @param $articleId the article id we are relating the fields to
+	* @param attribs our extra fields in object form
+	* @param articleId the article id we are relating the fields to
 	*
 	* @return bool
 	* @throws Exception
@@ -390,7 +400,7 @@ class plgContentEventlist extends JPlugin
 	public function insertRecord($attribs, $articleId)
 	{
 		// Get a db connection.
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Create a new query object.
 		$query = $db->getQuery(true);
@@ -398,9 +408,9 @@ class plgContentEventlist extends JPlugin
 		// Insert columns.
 		$columns = array('article_id', 'data', 'created', 'created_by');
 
-		$user = JFactory::getUser();
+		$user = Factory::getUser();
 		$created_by = $user->id;
-		$created = JFactory::getDate()->toSql();
+		$created = Factory::getDate()->toSql();
 
 		// Insert values.
 		$values = array(
@@ -431,15 +441,15 @@ class plgContentEventlist extends JPlugin
 	/**
 	* Update record function
 	*
-	* @param $attribs requires object of attributes from form
-	* @param $articleId id of the article we are relating to
+	* @param attribs requires object of attributes from form
+	* @param articleId id of the article we are relating to
 	*
 	* @return bool
 	* @throws Exception
 	*/
 	protected function updateRecord($attribs, $articleId)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Create a new query object.
 		$query = $db->getQuery(true);
@@ -448,9 +458,9 @@ class plgContentEventlist extends JPlugin
 			'article_id='.$articleId,
 		);
 
-		$user = JFactory::getUser();
+		$user = Factory::getUser();
 		$modified_by = $user->id;
-		$modified = JFactory::getDate()->toSql();
+		$modified = Factory::getDate()->toSql();
 
 		// Fields to update.
 		$fields = array(
@@ -512,7 +522,7 @@ class plgContentEventlist extends JPlugin
 	protected function getChildCategories($catId)
 	{
 		jimport('joomla.application.categories');
-		$allcategories = JCategories::getInstance('Content');
+		$allcategories = Categories::getInstance('Content');
 		$cat		= $allcategories->get($catId);
 		$children	= $cat->getChildren();
 		$childCats	= array();
@@ -537,7 +547,7 @@ class plgContentEventlist extends JPlugin
 		$parentCats	= array();
 
 		jimport('joomla.application.categories');
-		$allcategories = JCategories::getInstance('Content');
+		$allcategories = Categories::getInstance('Content');
 		$cat		= $allcategories->get($catId);
 
 		// Check the parent_id. If it is an integer > 0, update the array and

@@ -10,6 +10,11 @@
 // No direct access to this file
 defined('_JEXEC') or die;
 
+// Imports
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
+
 /**
  * Script file of EventList module
  */
@@ -59,12 +64,12 @@ class mod_eventListInstallerScript
 	function preflight($type, $parent) 
 	{
 		//echo '<p>Anything here happens before the installation/update/uninstallation of the module</p>';
-		if (!JPluginHelper::getPlugin('content', 'eventlist')) {
+		if (!PluginHelper::getPlugin('content', 'eventlist')) {
 			// Get a handle to the Joomla! application object
-			$application = JFactory::getApplication();
+			$application = Factory::getApplication();
 
 			// Add a message to the message queue
-			$application->enqueueMessage(JText::_('ERR_PLUGIN_NOT_FOUND'), 'warning');
+			$application->enqueueMessage(Text::_('ERR_PLUGIN_NOT_FOUND'), 'warning');
 		}
 	}
 

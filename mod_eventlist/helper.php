@@ -9,7 +9,12 @@
 
 defined('_JEXEC') or die;
 
+// Imports
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Access\Access;
+use Joomla\CMS\Router\Route;
 
 class ModEventListHelper
 {
@@ -107,7 +112,7 @@ class ModEventListHelper
 				$app       = Factory::getApplication();
 
 				// Get an instance of the generic articles model
-				$model = JModelLegacy::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
+				$model = BaseDatabaseModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
 
 				// Set application parameters in model
 				$appParams = $app->getParams();
@@ -122,8 +127,8 @@ class ModEventListHelper
 				$model->setState('load_tags', false);
 
 				// Access filter
-				$access     = !JComponentHelper::getParams('com_content')->get('show_noauth');
-				$authorised = JAccess::getAuthorisedViewLevels(Factory::getUser()->get('id'));
+				$access     = !ComponentHelper::getParams('com_content')->get('show_noauth');
+				$authorised = Access::getAuthorisedViewLevels(Factory::getUser()->get('id'));
 				$model->setState('filter.access', $access);
 
 				// Retrieve published content
@@ -149,7 +154,7 @@ class ModEventListHelper
 				          $eventData['title'] = $item->title;
 
 							// Include URL only for published articles
-				          if($item->state == 1) $eventData['url'] = JRoute::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
+				          if($item->state == 1) $eventData['url'] = Route::_("index.php?option=com_content&view=article&id=$item->id:$item->alias&catid=$item->catid:$item->category_alias");
 							break;
 						}
 					}

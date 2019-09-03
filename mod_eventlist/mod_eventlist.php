@@ -1,4 +1,7 @@
 <?php
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\HTML\Registry;
+
 /**
  * @package     Joomla.Site
  * @subpackage  mod_eventlist
@@ -15,9 +18,9 @@ JLoader::register('ModEventlistHelper', __DIR__ . '/helper.php');
 include __DIR__ . '/helper.php';
 
 // Get mod_eventlist parameters
-$module = JModuleHelper::getModule('mod_eventlist');
-$params = new JRegistry($module->params);
+$module = ModuleHelper::getModule('mod_eventlist');
+$params = new Registry($module->params);
 
 $eventList = ModEventListHelper::getList($params);
 	
-require JModuleHelper::getLayoutPath('mod_eventlist', $params['eventlist_template']);
+require ModuleHelper::getLayoutPath('mod_eventlist', $params['eventlist_template']);

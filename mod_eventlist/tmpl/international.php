@@ -8,20 +8,23 @@
  */
  
 // No direct access
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+
 defined('_JEXEC') or die;
 
 if($eventList <> null && array_filter($eventList)) {
 	
 	// Load language file, set default language to en-GB
-	$language =& JFactory::getLanguage();
+	$language =& Factory::getLanguage();
 	$language->setDefault('en-GB');
 	$extension = 'mod_eventlist';
 	$base_dir = JPATH_SITE;
 	$language->load($extension, $base_dir, $language->getTag(), true);
 
 	// Add CSS
-	$doc = JFactory::getDocument();
-	$doc->addStyleSheet(JURI::base(true).'/modules/mod_eventlist/css/eventlist.css');
+	$doc = Factory::getDocument();
+	$doc->addStyleSheet(Uri::base(true).'/modules/mod_eventlist/css/eventlist.css');
 
 	// Define weekdays; 0 = Sunday to 6 = Saturday
 	$weekdays = explode(',', $language->_("MOD_EVENTLIST_WEEKDAYS"));
