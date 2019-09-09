@@ -11,16 +11,16 @@ jimport('joomla.plugin.plugin');
 use Joomla\CMS\Factory;
 use Joomla\CMS\Categories\Categories;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Form\Field\PluginsField;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\Registry;
+use Joomla\CMS\Plugin\CMSPlugin;
 
 /**
  * This is a custom plugin class to add additional fields to com_content to allow it to be used for capturing recurring events
  */
-class plgContentEventlist extends PluginsField
+class plgContentEventlist extends CMSPlugin
 {
 	/**
 	 * Load the language file on instantiation.
