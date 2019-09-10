@@ -14,8 +14,8 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\HTML\Registry;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Registry\Registry;
 
 /**
  * This is a custom plugin class to add additional fields to com_content to allow it to be used for capturing recurring events
