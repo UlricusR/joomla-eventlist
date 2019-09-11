@@ -11,7 +11,6 @@ defined('_JEXEC') or die;
 
 // Imports
 use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Model\BaseDatabaseModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Router\Route;
@@ -112,7 +111,7 @@ class ModEventListHelper
 				$app       = Factory::getApplication();
 
 				// Get an instance of the generic articles model
-				$model = BaseDatabaseModel::getInstance('Articles', 'ContentModel', array('ignore_request' => true));
+				$model = $app->bootComponent('com_content')->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
 
 				// Set application parameters in model
 				$appParams = $app->getParams();

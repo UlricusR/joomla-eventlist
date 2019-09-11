@@ -1,7 +1,4 @@
 <?php
-use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\HTML\Registry;
-
 /**
  * @package     Joomla.Site
  * @subpackage  mod_eventlist
@@ -12,6 +9,10 @@ use Joomla\CMS\HTML\Registry;
 
 // No direct access
 defined('_JEXEC') or die;
+
+// Imports
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\Registry\Registry;
 
 // Include the eventlist functions only once
 JLoader::register('ModEventlistHelper', __DIR__ . '/helper.php');
