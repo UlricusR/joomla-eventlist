@@ -11,7 +11,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormRule;
-use Joomla\CMS\HTML\Registry;
+use Joomla\Registry\Registry;
 
 /**
  * This is a rule to verify the time format of the input form
