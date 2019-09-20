@@ -12,16 +12,11 @@ defined('_JEXEC') or die;
 
 // Imports
 use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\Registry\Registry;
+use Joomla\Module\EventList\Site\Helper\EventListHelper;
 
-// Include the eventlist functions only once
-JLoader::register('ModEventlistHelper', __DIR__ . '/helper.php');
-include __DIR__ . '/helper.php';
+// Get articles model
+$model = $app->bootComponent('com_content')->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
 
-// Get mod_eventlist parameters
-$module = ModuleHelper::getModule('mod_eventlist');
-$params = new Registry($module->params);
-
-$eventList = ModEventListHelper::getList($params);
+$eventList = EventListHelper::getList($params, $model);
 	
 require ModuleHelper::getLayoutPath('mod_eventlist', $params['eventlist_template']);

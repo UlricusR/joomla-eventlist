@@ -11,12 +11,12 @@
 		(https://github.com/UlricusR/joomla-eventlist/blob/master/LICENSE) license.
 	</license>
 	<description>MOD_EVENTLIST_DESC</description>
+	<namespace>Joomla\Module\EventList</namespace>
 	
 	<files>
 		<filename>mod_eventlist.xml</filename>
 		<filename module="mod_eventlist">mod_eventlist.php</filename>
 		<filename>index.html</filename>
-		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>css</folder>
 	</files>
