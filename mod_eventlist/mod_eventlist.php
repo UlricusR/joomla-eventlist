@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 // Imports
 use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\Module\EventList\Site\Helper\EventListHelper;
+use RuethInfo\Module\EventList\Site\Helper\EventListHelper;
 
 // Get articles model
 $model = $app->bootComponent('com_content')->getMVCFactory()->createModel('Articles', 'Site', ['ignore_request' => true]);
