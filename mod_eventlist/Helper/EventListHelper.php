@@ -6,7 +6,7 @@
  * @copyright   Copyright (C) 2018-2019 Ulrich Rueth. All rights reserved.
  * @license     GNU General Public License version 3 or later
  */
-namespace Joomla\Module\EventList\Site\Helper;
+namespace RuethInfo\Module\EventList\Site\Helper;
 
 defined('_JEXEC') or die;
 

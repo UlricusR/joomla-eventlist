@@ -19,6 +19,7 @@
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
 		<folder>css</folder>
+		<folder>Helper</folder>
 	</files>
 	<scriptfile>script.php</scriptfile>
 	
